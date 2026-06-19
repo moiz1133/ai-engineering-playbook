@@ -61,3 +61,38 @@ Recall climbs steeply from `ef_search` 10→100 (77%→99.8%) then flattens — 
 `ef_search` ≈ 200 there's almost nothing left to gain, only added latency. This is the
 classic ANN-benchmarks "knee" curve: the useful operating range is the steep part, not
 the tail.
+
+## Benchmark Results
+
+Brute-force (exact, O(N) scan) vs. HNSW (`M=16`, `ef_construction=200`,
+`ef_search=50`), 384-dim vectors, 100 queries/size:
+
+| Dataset Size | Method | Build Time | Index RAM | Mean Query (ms) | p95 (ms) | Recall@10 |
+|---|---|---|---|---|---|---|
+| 1,000 | Brute-force | 0.0012s | 5.0 MB | 0.089 | 0.268 | 1.0000 (exact) |
+| 1,000 | HNSW | 0.0175s | 13.7 MB | 0.021 | 0.028 | 1.0000 |
+| 10,000 | Brute-force | 0.0122s | 35.3 MB | 0.402 | 0.788 | 1.0000 (exact) |
+| 10,000 | HNSW | 0.3093s | 43.7 MB | 0.057 | 0.074 | 0.9990 |
+| 100,000 | Brute-force | 0.1050s | 300.1 MB | 5.834 | 7.536 | 1.0000 (exact) |
+| 100,000 | HNSW | 5.7193s | 335.7 MB | 0.206 | 0.282 | 0.9850 |
+
+![Query latency vs size](benchmark_output/query_latency_vs_size.png)
+![RAM usage vs size](benchmark_output/ram_usage_vs_size.png)
+
+### Key takeaways
+
+- **Speed**: at 100,000 vectors, HNSW answers queries 28.3x faster than brute force
+  (0.206ms vs 5.834ms mean).
+- **Scaling**: brute-force latency grows ~65x across the 100x size increase
+  (1k→100k); HNSW only grows ~10x — the O(N) vs O(log N) divergence, visualized.
+- **Accuracy cost**: HNSW gives up only 1.5% recall (98.5% vs exact) at 100,000
+  vectors for that speedup.
+- **RAM cost**: HNSW's graph adds ~12% more memory than storing the raw vectors alone
+  (+35.6 MB at 100k).
+- **Bottom line**: past roughly 10k vectors, brute-force's linear scan cost starts to
+  dominate, and HNSW's small accuracy/RAM trade-off is worth it for an
+  order-of-magnitude (or more) latency win.
+
+Data is synthetic (seeded Gaussian-mixture clusters, not pure random noise — see
+`generate_clustered_dataset` in `benchmark.py` for why pure random noise gives
+misleadingly bad HNSW recall in high dimensions).
