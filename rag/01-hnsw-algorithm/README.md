@@ -39,3 +39,25 @@ HNSW builds a multi-layer graph over the indexed vectors instead of a flat list:
 - Routing through long-range links at the top layers first, then narrowing down,
   is why HNSW query time scales roughly O(log N) instead of brute force's O(N): each
   layer prunes the search space geometrically rather than scanning every vector once.
+
+## Recall vs. Latency Trade-off
+
+`ef_search` is a query-time-only knob — changing it doesn't require rebuilding the
+index — which is what makes it the natural dial for trading speed against accuracy.
+Swept `ef_search` ∈ [10, 50, 100, 200, 500] on a 100,000-vector index
+(`M=16`, `ef_construction=200`):
+
+| ef_search | Mean Query (ms) | Recall@10 |
+|---|---|---|
+| 10  | 0.106 | 0.771 |
+| 50  | 0.213 | 0.986 |
+| 100 | 0.257 | 0.998 |
+| 200 | 0.312 | 0.999 |
+| 500 | 0.608 | 0.999 |
+
+![Recall vs Latency](benchmark_output/recall_latency_curve.png)
+
+Recall climbs steeply from `ef_search` 10→100 (77%→99.8%) then flattens — past
+`ef_search` ≈ 200 there's almost nothing left to gain, only added latency. This is the
+classic ANN-benchmarks "knee" curve: the useful operating range is the steep part, not
+the tail.
