@@ -1,0 +1,6 @@
+chromadb
+hnswlib
+numpy
+psutil
+matplotlib
+tabulate
