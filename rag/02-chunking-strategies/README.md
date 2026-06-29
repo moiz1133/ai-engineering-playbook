@@ -155,6 +155,55 @@ plain-English recommendation that picks the best non-baseline strategy by
 `(recall@3, -index_tokens)` — fixed-size is excluded from that pick since its
 recall@3 is trivially 1.00 by construction.
 
+## Benchmark results
+
+Measured on `rag_test_document.pdf` (the 6-section, ~6,200-character corpus described
+above) with `text-embedding-3-large`, 5 test queries spanning all six topics:
+
+```
+Strategy     | Chunks | Avg size | Build(s) | Boundary% | Recall@3 | Tokens
+-------------|--------|----------|----------|-----------|----------|-------
+Fixed-size   | 14     | 492      | 0.00s    | 71%       | 1.00     | 1,070
+Recursive    | 17     | 414      | 0.00s    | 76%       | 1.00     | 1,099
+Semantic     | 34     | 182      | 9.83s    | 0%        | 0.87     | 969
+Doc-aware    | 10     | 598      | 0.00s    | 0%        | 0.80     | 939
+```
+
+> For this corpus, Recursive gives the best recall/cost tradeoff because it reaches
+> recall@3 of 1.00 using 1,099 index tokens and a 0.00s build, without the
+> per-sentence embedding overhead semantic chunking pays at index time.
+
+### Reading these numbers
+
+- **Boundary% is high (71-76%) for fixed and recursive here**, well above the
+  ~15-20% you'd expect on a longer corpus. This document's paragraphs run
+  500-900 characters — close to `chunk_size=500` itself — so a 500-character window
+  frequently lands inside a paragraph rather than at its edge. Boundary% is a
+  property of *how a document's natural unit size compares to chunk_size*, not a
+  fixed cost of the strategy; recursive only avoids it when chunk_size comfortably
+  exceeds the surrounding paragraph/sentence length.
+- **Semantic and document-aware both score 0% boundary penalty by construction** —
+  semantic chunks always start at a sentence boundary (joined whole sentences) and
+  document-aware chunks always start at a section boundary (or a recursive split
+  point that itself respects sentence/paragraph edges), so the "starts lowercase"
+  heuristic never fires for either.
+- **Recursive ties fixed-size at recall@3 = 1.00** mainly because this corpus is
+  small enough (six sections, ~6,200 characters) that both strategies' chunks
+  densely cover the same handful of topics — the ground-truth comparison is against
+  fixed-size itself, so any strategy whose chunks span similar text inevitably scores
+  well too.
+- **Semantic is ~9.8s to build versus ~0.00s for the others** — the one-embedding-
+  call-per-sentence cost from the design doc shows up directly; on a larger corpus
+  this gap only grows, since fixed/recursive/document-aware build cost is pure string
+  manipulation while semantic's build cost is bounded by the OpenAI API.
+- **Doc-aware uses the fewest tokens (939) for the fewest chunks (10)** — by chunking
+  along section boundaries it produces the largest, most self-contained chunks here,
+  trading some recall (0.80) for the lowest indexing cost.
+
+Re-run `python benchmark.py` after editing `rag_test_document.pdf` or the test
+queries — these numbers are corpus-specific, not universal claims about any one
+strategy.
+
 ## Rule of thumb
 
 - **Fixed-size**: O(1) build, content-blind, routinely cuts mid-sentence.
