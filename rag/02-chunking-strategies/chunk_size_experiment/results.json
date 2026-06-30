@@ -1,0 +1,44 @@
+{
+  "150": {
+    "chunk_count": 313,
+    "build_time_s": 15.309115100000326,
+    "embedding_tokens": 47913,
+    "hit_rate": 0.5333333333333333,
+    "hit_rate_by_type": {
+      "factual": 1.0,
+      "multi_concept": 0.6,
+      "rephrased": 0.0
+    },
+    "avg_top1_similarity": 0.5921325008074443,
+    "split_context_rate": 0.4,
+    "avg_query_latency_ms": 467.9906733332852
+  },
+  "300": {
+    "chunk_count": 185,
+    "build_time_s": 9.201324399999976,
+    "embedding_tokens": 48753,
+    "hit_rate": 0.7333333333333333,
+    "hit_rate_by_type": {
+      "factual": 1.0,
+      "multi_concept": 0.4,
+      "rephrased": 0.8
+    },
+    "avg_top1_similarity": 0.6182648022969564,
+    "split_context_rate": 0.6,
+    "avg_query_latency_ms": 490.76671999998024
+  },
+  "600": {
+    "chunk_count": 90,
+    "build_time_s": 4.702433399999791,
+    "embedding_tokens": 48573,
+    "hit_rate": 0.9333333333333333,
+    "hit_rate_by_type": {
+      "factual": 1.0,
+      "multi_concept": 0.8,
+      "rephrased": 1.0
+    },
+    "avg_top1_similarity": 0.591436485449473,
+    "split_context_rate": 0.2,
+    "avg_query_latency_ms": 488.5039266666657
+  }
+}
