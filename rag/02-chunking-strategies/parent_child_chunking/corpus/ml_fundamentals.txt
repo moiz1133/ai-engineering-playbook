@@ -1,0 +1,63 @@
+Machine Learning Fundamentals
+
+Machine learning is a branch of artificial intelligence that enables computer systems to learn from data and improve their performance on tasks without being explicitly programmed for each scenario. Rather than following hard-coded rules, machine learning models discover patterns in data and generalize those patterns to make predictions or decisions on new, unseen examples.
+
+The field emerged from the broader discipline of artificial intelligence research in the 1950s and 1960s, but it gained tremendous momentum in the 1980s and 1990s as computational power increased and large datasets became more available. Today, machine learning powers applications ranging from email spam filters and product recommendation engines to autonomous vehicles and medical diagnosis systems.
+
+Supervised Learning
+
+Supervised learning is the most widely used paradigm in machine learning. In supervised learning, a model is trained on a labeled dataset — a collection of input-output pairs where the correct answer is already known. The model learns to map inputs to outputs by minimizing a loss function that measures the difference between its predictions and the true labels.
+
+Classification is a type of supervised learning where the output is a discrete category. A spam detector that labels emails as "spam" or "not spam" is a classification model. Regression is another form of supervised learning where the output is a continuous numerical value, such as predicting the price of a house given its features like square footage, location, and number of bedrooms.
+
+Common supervised learning algorithms include linear regression, logistic regression, decision trees, random forests, support vector machines, and neural networks. Each algorithm makes different assumptions about the underlying data distribution and has different strengths and weaknesses depending on the problem at hand.
+
+Unsupervised Learning
+
+Unsupervised learning involves training a model on data that has no labels. The model must discover inherent structure in the data on its own. Clustering is a classic unsupervised task where the algorithm groups similar data points together. K-means clustering, for instance, partitions data into k clusters by iteratively assigning each point to the nearest cluster centroid and updating centroids based on the mean of assigned points.
+
+Dimensionality reduction is another important unsupervised technique. High-dimensional data — data with many features — is difficult to visualize and can slow down learning algorithms. Principal Component Analysis, or PCA, projects data onto a lower-dimensional space while retaining as much variance as possible. Autoencoders, a type of neural network, learn compressed representations of data through an encoder-decoder architecture.
+
+Generative models represent a powerful category of unsupervised learning. Variational Autoencoders and Generative Adversarial Networks, or GANs, learn to produce new data samples that resemble the training distribution. GANs consist of two networks — a generator that creates synthetic samples and a discriminator that tries to distinguish real from fake — trained in an adversarial fashion.
+
+Reinforcement Learning
+
+Reinforcement learning is a paradigm where an agent learns by interacting with an environment. The agent takes actions, receives rewards or penalties based on those actions, and updates its policy to maximize cumulative reward over time. Unlike supervised learning, there are no labeled examples — the agent must explore the environment to discover which actions lead to favorable outcomes.
+
+The exploration-exploitation tradeoff is central to reinforcement learning. An agent must balance exploring new actions to discover their value and exploiting known high-reward actions. Too much exploration wastes time on suboptimal actions; too much exploitation prevents the agent from discovering better strategies.
+
+Key concepts include the state space, which defines all possible situations the agent can encounter; the action space, which defines all possible actions the agent can take; and the reward function, which defines the numerical signal the agent receives after each action. Q-learning and policy gradient methods are two foundational algorithms in this space.
+
+Neural Networks and Deep Learning
+
+Neural networks are computational models loosely inspired by the structure of biological brains. They consist of layers of interconnected nodes, or neurons, where each connection has an associated weight. During training, these weights are adjusted through backpropagation — an algorithm that computes the gradient of the loss function with respect to each weight and updates them in the direction that reduces loss.
+
+Deep learning refers to the use of neural networks with many hidden layers, enabling the model to learn increasingly abstract representations of the data. Convolutional Neural Networks, or CNNs, are specialized architectures designed for grid-like data such as images. They apply learned filters across the input to detect local patterns like edges, textures, and shapes, building up complex representations through multiple layers.
+
+Recurrent Neural Networks, or RNNs, are designed for sequential data. Unlike feedforward networks, RNNs maintain a hidden state that captures information from previous time steps. Long Short-Term Memory, or LSTM, cells address the vanishing gradient problem in standard RNNs by using gating mechanisms to selectively remember or forget information over long sequences.
+
+The Transformer architecture, introduced in 2017, revolutionized natural language processing and beyond. Transformers use self-attention mechanisms to model relationships between all positions in a sequence simultaneously, rather than processing sequentially like RNNs. This parallelism enables training on much larger datasets and has led to foundation models like GPT and BERT that demonstrate remarkable general-purpose capabilities.
+
+Overfitting and Regularization
+
+Overfitting occurs when a model learns the training data too well, capturing noise and idiosyncrasies rather than the true underlying pattern. An overfit model performs well on training data but poorly on new, unseen data. The gap between training performance and test performance is a diagnostic indicator of overfitting.
+
+Regularization techniques reduce overfitting by adding constraints or noise to the learning process. L1 regularization adds a penalty proportional to the absolute value of weights, encouraging sparse solutions where many weights are exactly zero. L2 regularization, also called weight decay, penalizes large weights by adding a term proportional to the square of each weight.
+
+Dropout is a regularization technique specific to neural networks where random neurons are temporarily disabled during training, forcing the network to learn redundant representations. Data augmentation artificially expands the training set by applying transformations like rotation, flipping, and cropping to existing examples, helping the model generalize across variations.
+
+Model Evaluation and Validation
+
+Proper evaluation is essential in machine learning to ensure models generalize well. The standard practice is to split data into training, validation, and test sets. The model is trained on the training set, hyperparameters are tuned using the validation set, and final performance is reported on the held-out test set, which the model has never seen during development.
+
+Cross-validation is a more robust evaluation strategy where the data is divided into k folds. The model is trained k times, each time using a different fold as the validation set and the remaining folds as training data. Performance is averaged across all k runs. This approach makes more efficient use of available data and provides a more reliable estimate of generalization performance.
+
+Common evaluation metrics include accuracy, precision, recall, and F1-score for classification tasks, and mean squared error or mean absolute error for regression. The choice of metric depends on the problem context — in medical diagnosis, for instance, recall (sensitivity) may be more important than precision to minimize missed positive cases.
+
+Feature Engineering and Selection
+
+Feature engineering is the process of transforming raw data into informative representations that machine learning algorithms can effectively learn from. Good features capture the underlying structure relevant to the prediction task. For example, instead of using raw timestamps, one might extract day-of-week, hour-of-day, and whether the time falls on a holiday, each of which may carry distinct predictive signal.
+
+Feature selection reduces the dimensionality of the input by identifying and retaining only the most informative features. Filter methods rank features by statistical criteria such as correlation with the target variable. Wrapper methods evaluate subsets of features by training a model on each subset and selecting the subset that yields the best validation performance. Embedded methods perform feature selection as part of the model training process, as L1 regularization does by driving irrelevant feature weights to zero.
+
+Transfer learning has become a dominant paradigm for reducing the need for large labeled datasets. A model pre-trained on a large general dataset can be fine-tuned on a smaller task-specific dataset, leveraging features learned during pre-training. This approach has proven remarkably effective in computer vision, where models pre-trained on ImageNet transfer well to medical imaging tasks, and in natural language processing, where models pre-trained on large text corpora adapt to downstream tasks with minimal task-specific data.

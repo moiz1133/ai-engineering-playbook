@@ -1,0 +1,67 @@
+The History of the Internet: From ARPANET to the Modern Web
+
+The internet is the most transformative communication technology in human history — a global network of interconnected computers that has reshaped commerce, culture, science, politics, and virtually every other domain of human activity. Its development spans more than six decades, beginning with Cold War-era military research and evolving through academic experimentation, commercial explosion, and the ongoing digital revolution that continues to shape our world today.
+
+Origins: ARPANET and Packet Switching
+
+The intellectual foundations of the internet were laid in the early 1960s, when researchers at the RAND Corporation, MIT, and the National Physical Laboratory in the United Kingdom were independently developing the concept of packet switching. Traditional telecommunications systems, including telephone networks, used circuit switching — a dedicated physical connection was established between two parties for the duration of a call. This approach was reliable but inflexible and vulnerable to disruption at any single point in the network.
+
+Paul Baran at RAND developed the concept of a distributed communications network in which messages are broken into discrete packets, each sent independently through the network and reassembled at the destination. This design had no single point of failure — even if portions of the network were destroyed, packets could be rerouted through surviving nodes. Although Baran's motivation was partly to create a communications system that could survive nuclear attack, the distributed architecture he proposed became the foundational design principle of the modern internet.
+
+The Advanced Research Projects Agency Network, or ARPANET, was funded by the United States Department of Defense and became the first operational packet-switched network. On October 29, 1969, the first message was transmitted between UCLA and the Stanford Research Institute. The message was supposed to be the word "login," but the system crashed after the first two letters — making "lo" the first message ever sent over what would become the internet. By December 1969, ARPANET had four nodes; by 1972, it had grown to 37 nodes connecting universities and research institutions across the United States.
+
+TCP/IP and the Birth of Internetworking
+
+The fundamental challenge of early networking was heterogeneity — different networks used different protocols and could not communicate with each other. The solution was the development of a universal set of rules for how data would be formatted, addressed, transmitted, and received across any network, regardless of its underlying technology.
+
+Vint Cerf and Bob Kahn developed the Transmission Control Protocol and Internet Protocol, collectively known as TCP/IP, in 1974. TCP handles the reliable transmission of data, breaking messages into packets, ensuring all packets arrive, requesting retransmission of lost packets, and reassembling them in the correct order. IP handles addressing and routing, defining how each node on the network is addressed and how routers determine the path packets should take to reach their destination.
+
+On January 1, 1983 — a date sometimes called "Flag Day" — ARPANET switched from its older Network Control Program to TCP/IP, unifying all connected networks under a single protocol. This moment is often cited as the true birth of the internet as we understand it today, because TCP/IP provided the universal language that allowed any network to communicate with any other network, regardless of hardware or operating system.
+
+Domain Name System and Network Expansion
+
+As the internet grew, the simple text file that listed all host names and their corresponding numerical IP addresses — maintained by a single administrator at the Stanford Research Institute — became impossibly unwieldy. The Domain Name System, or DNS, was invented by Paul Mockapetris in 1983 to replace this centralized approach with a distributed, hierarchical system.
+
+DNS translates human-readable domain names like example.com into the numerical IP addresses that computers use to identify each other on the network. The system is organized as a tree: root servers at the top handle queries for top-level domains like .com, .org, and country codes; authoritative nameservers below them hold records for specific domains. This distributed architecture allows the system to scale to handle billions of queries daily without a central bottleneck.
+
+Throughout the 1980s, the internet expanded steadily through universities, research institutions, and government agencies. The National Science Foundation funded the creation of NSFNET in 1985, a high-speed backbone network that connected regional networks and dramatically increased the internet's capacity. By the end of the decade, the internet had grown to connect tens of thousands of computers worldwide, though it remained primarily a tool of academic and government users.
+
+The World Wide Web
+
+The World Wide Web was invented by Tim Berners-Lee at CERN, the European nuclear research laboratory, in 1989. Berners-Lee was trying to solve a practical problem: CERN employed thousands of scientists from many different countries, each using different computers and software, and sharing documents and information between them was cumbersome and inconsistent.
+
+His proposal combined three technologies: the HyperText Markup Language, or HTML, for formatting documents; the HyperText Transfer Protocol, or HTTP, for transmitting documents over the internet; and the Uniform Resource Locator, or URL, for providing a standard address system for any document on the network. Together, these technologies enabled a system of interlinked documents — hyperlinks — that could be navigated by clicking from one page to another across any computer on the internet.
+
+The first web browser, WorldWideWeb (later renamed Nexus), was created by Berners-Lee himself in 1990. The Mosaic browser, released by the National Center for Supercomputing Applications in 1993, was the first to support inline images and was instrumental in bringing the web to a general audience. Mosaic's success led directly to the creation of Netscape Navigator, which became the dominant browser of the mid-1990s and triggered the first wave of commercial internet development.
+
+The Dot-Com Era and Commercial Internet
+
+The mid-1990s saw explosive commercial interest in the internet. The U.S. government decommissioned NSFNET in 1995, allowing fully commercial operation of internet backbone networks. A wave of companies — Amazon, eBay, Yahoo, and hundreds of others — raced to establish online businesses, attracting massive investment from venture capitalists and public markets eager to participate in what seemed like an unlimited growth opportunity.
+
+The dot-com bubble reached its peak in March 2000, when the NASDAQ Composite index hit 5,048 — more than double its value just a year earlier. The subsequent crash wiped out trillions of dollars in market capitalization and bankrupted hundreds of internet companies that had never turned a profit. But the crash also cleared the field of speculative ventures and left behind a core of companies — Amazon, Google, and others — whose business models proved sustainable.
+
+Broadband internet access, which replaced slow dial-up connections, began reaching significant portions of the population in the early 2000s. Broadband fundamentally changed how people used the internet, enabling streaming video, large file downloads, and always-on connectivity that made the internet a background utility of daily life rather than a specific activity requiring deliberate connection.
+
+Search Engines and the Google Era
+
+Early attempts at organizing the web included Yahoo's manually curated directory and early search engines like AltaVista, Lycos, and Excite that ranked results by keyword frequency. These approaches struggled to surface high-quality results as the web grew larger and more complex. The breakthrough came from Stanford graduate students Larry Page and Sergey Brin, who developed PageRank — an algorithm that ranked web pages by the number and quality of other pages linking to them.
+
+The insight behind PageRank was that links from one page to another represent a form of editorial endorsement — a page that many high-quality pages link to is likely itself high-quality. This link-based ranking produced dramatically better search results than keyword frequency alone. Page and Brin founded Google in 1998, and the search engine rapidly became the dominant way people navigated the web.
+
+Google's business model — selling targeted advertising alongside search results — proved enormously profitable and funded an expansion into adjacent markets including email (Gmail, launched in 2004), online mapping (Google Maps, 2005), online video (YouTube, acquired in 2006), and mobile operating systems (Android, acquired in 2005). Google's advertising platform reshaped the media industry by making it possible to target ads with unprecedented precision and measure their effectiveness directly.
+
+Social Media and the Participatory Web
+
+The mid-2000s saw the emergence of what was called Web 2.0 — a shift from the static, read-only web of the 1990s to an interactive, participatory web where users create and share content. Wikipedia, founded in 2001, demonstrated that collaborative editing by volunteers could produce a comprehensive encyclopedia of remarkable quality. Blogs gave individuals publishing platforms accessible to anyone with an internet connection.
+
+Social networking sites transformed how people communicate and share information. Friendster and MySpace pioneered the concept of online social networks in the early 2000s, but Facebook, founded by Mark Zuckerberg at Harvard in 2004, eventually displaced all rivals to become the dominant social platform with billions of users worldwide. Twitter, launched in 2006, introduced the concept of real-time public microblogging, creating a new medium for news, public discourse, and cultural conversation.
+
+The smartphone revolution, catalyzed by Apple's iPhone in 2007 and the subsequent proliferation of Android devices, moved the internet from desktop computers to mobile devices that billions of people carry constantly. Mobile internet access now accounts for the majority of global internet traffic, and mobile-first design has become the dominant paradigm for web development. The App Store model created new digital economies and shifted significant internet usage from open web browsers to closed platform ecosystems.
+
+The Modern Internet: Infrastructure and Governance
+
+The physical infrastructure of the modern internet is a marvel of global engineering. Undersea fiber optic cables, many of them privately owned by major technology companies, carry the vast majority of international internet traffic. Data centers containing millions of servers concentrate enormous computing power at strategic locations around the world, serving content and applications to users everywhere.
+
+Content Delivery Networks, or CDNs, improve performance by caching copies of popular content at servers geographically close to users, reducing latency and bandwidth costs. Cloud computing platforms — AWS, Microsoft Azure, and Google Cloud — provide on-demand access to computing infrastructure, enabling startups and enterprises alike to scale services globally without building their own physical infrastructure.
+
+Internet governance remains contentious. The Internet Corporation for Assigned Names and Numbers, or ICANN, coordinates the global DNS system and IP address allocation. The Internet Engineering Task Force develops technical standards through open, consensus-based processes. But questions of content moderation, data privacy, cybersecurity, surveillance, and the concentration of power in a small number of technology platforms are governed differently across different nations, creating ongoing tensions between the internet's global technical architecture and the territorial boundaries of national sovereignty.

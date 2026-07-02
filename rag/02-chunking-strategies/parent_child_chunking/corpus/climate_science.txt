@@ -1,0 +1,59 @@
+Climate Science: Understanding Earth's Changing Climate
+
+Climate science is the multidisciplinary study of Earth's climate system — the complex, interconnected network of the atmosphere, oceans, land surface, ice sheets, and living organisms that together determine the planet's long-term weather patterns. Understanding how this system functions and how it responds to both natural and human-caused perturbations is one of the most consequential scientific endeavors of our era.
+
+The distinction between weather and climate is fundamental. Weather describes short-term atmospheric conditions at a specific location — today's temperature, humidity, and whether it will rain. Climate describes the statistical patterns of those conditions over decades, typically defined by 30-year averages and variability. A single hot summer is weather; a trend of increasingly hot summers over multiple decades is a climate signal.
+
+The Greenhouse Effect
+
+The greenhouse effect is the mechanism by which Earth's atmosphere traps heat from the sun, keeping the planet warm enough to support life. Solar radiation reaches Earth's surface and warms it; the surface then radiates energy back upward as infrared radiation. Greenhouse gases in the atmosphere — primarily water vapor, carbon dioxide, methane, nitrous oxide, and ozone — absorb this outgoing infrared radiation and re-emit it in all directions, including back toward the surface.
+
+Without the natural greenhouse effect, Earth's average surface temperature would be approximately negative 18 degrees Celsius, roughly 33 degrees colder than the current average of about 15 degrees Celsius. The greenhouse effect is not inherently problematic — it is what makes Earth habitable. The concern is the enhanced greenhouse effect caused by rising concentrations of greenhouse gases from human activities.
+
+Carbon dioxide is the most important anthropogenic greenhouse gas. Its atmospheric concentration has risen from approximately 280 parts per million in the pre-industrial era to over 420 parts per million today — a level not seen on Earth for at least 800,000 years based on ice core records. Methane, though present in smaller concentrations, is about 80 times more potent than carbon dioxide as a greenhouse gas over a 20-year timescale, making emissions from livestock, rice cultivation, and natural gas infrastructure significant contributors to warming.
+
+Climate Feedbacks and Tipping Points
+
+Climate feedbacks are processes that can amplify or dampen the initial warming caused by greenhouse gas increases. Positive feedbacks accelerate warming while negative feedbacks slow it. The water vapor feedback is the strongest positive feedback: as the atmosphere warms, it holds more water vapor, which is itself a powerful greenhouse gas, causing additional warming. This feedback roughly doubles the warming that would occur from carbon dioxide alone.
+
+The ice-albedo feedback is another critical positive feedback. Ice and snow are highly reflective, bouncing a large fraction of incoming solar radiation back into space. As warming causes ice to melt, it exposes darker ocean or land surfaces that absorb more sunlight, causing further warming and more melting. This feedback is particularly important in the Arctic, where warming is occurring at roughly four times the global average rate — a phenomenon called Arctic amplification.
+
+Permafrost thaw represents one of the most concerning potential feedbacks. Permafrost is frozen ground in high-latitude regions that contains vast quantities of organic carbon accumulated over thousands of years. As permafrost thaws, this carbon is decomposed by microbes and released as carbon dioxide and methane. Current estimates suggest permafrost contains roughly 1.5 trillion metric tons of carbon — nearly twice the amount currently in the atmosphere.
+
+Tipping points are thresholds in the climate system beyond which a self-sustaining change becomes irreversible even if greenhouse gas concentrations stabilize. The collapse of the West Antarctic Ice Sheet, the dieback of the Amazon rainforest, and the disruption of Atlantic Ocean circulation are all potential tipping elements that could be triggered by continued warming. Crossing one tipping point can increase the likelihood of crossing others through cascading interactions.
+
+Ocean Dynamics and Sea Level Rise
+
+The oceans play a fundamental role in regulating Earth's climate. They absorb roughly a quarter of the carbon dioxide emitted by human activities each year, and they have absorbed more than 90 percent of the excess heat accumulated in the Earth system due to the enhanced greenhouse effect. This ocean heat uptake has slowed surface warming but has significant consequences for marine ecosystems and ocean circulation.
+
+Ocean acidification is a direct consequence of the ocean's carbon absorption. When carbon dioxide dissolves in seawater, it forms carbonic acid, lowering the pH of the ocean. Since pre-industrial times, ocean pH has decreased from approximately 8.2 to 8.1 — a seemingly small change that corresponds to a 26 percent increase in acidity due to the logarithmic nature of the pH scale. This acidification threatens shell-forming organisms like corals, oysters, and many species of plankton that form the base of marine food webs.
+
+Sea level rise results from two primary mechanisms: thermal expansion of warming seawater and the melting of land-based ice. Thermal expansion accounts for roughly a third of observed sea level rise to date. The Greenland and Antarctic ice sheets together hold enough ice to raise global sea levels by approximately 65 meters if they were to melt completely. Even partial melting under current trajectories could raise sea levels by one to two meters by 2100, threatening coastal cities and low-lying island nations.
+
+Extreme Weather Events
+
+Climate change does not simply mean uniform warming everywhere — it alters the intensity, frequency, and distribution of extreme weather events. The relationship between climate change and extreme weather is one of the most actively studied areas in climate science, using a field called attribution science to estimate how much human-caused warming has changed the probability or magnitude of specific events.
+
+Heatwaves are among the most directly linked extreme events. In a warmer world, what was once a rare extreme becomes more frequent and more intense. The 2021 Pacific Northwest heat dome, which shattered temperature records across western North America and killed hundreds of people, was assessed to be virtually impossible without human-caused climate change. Future warming will make such events dramatically more common.
+
+Precipitation patterns are also shifting. A warmer atmosphere holds more moisture — roughly 7 percent more for each degree Celsius of warming — leading to more intense rainfall events when storms do occur. At the same time, higher temperatures increase evaporation, intensifying droughts in regions where precipitation decreases or where rainfall timing becomes less aligned with seasonal water demand.
+
+Tropical cyclones — hurricanes and typhoons — are projected to become more intense as sea surface temperatures rise, providing more energy to fuel these storms. Research suggests that while the total number of tropical cyclones may decrease or stay roughly constant, the proportion reaching the highest intensity categories is increasing, and storms are more likely to rapidly intensify and bring heavier rainfall.
+
+Climate Modeling and Projections
+
+Climate models are mathematical representations of the Earth system, encoding the physical, chemical, and biological processes that govern climate. General Circulation Models, or GCMs, solve equations representing fluid dynamics in the atmosphere and oceans on a global grid, simulating how the climate system responds to changes in greenhouse gas concentrations, solar output, volcanic eruptions, and other forcing factors.
+
+Modern Earth System Models are increasingly comprehensive, incorporating representations of the carbon cycle, vegetation dynamics, sea ice, ice sheets, and atmospheric chemistry in addition to the core physical climate system. These models are evaluated by their ability to reproduce observed climate patterns — including historical temperature trends, seasonal cycles, El Niño variability, and the response to volcanic eruptions — before being used to project future conditions.
+
+Climate projections are typically presented across a range of emissions scenarios, reflecting different possible futures for human greenhouse gas emissions. The Shared Socioeconomic Pathways, or SSPs, developed by the Intergovernmental Panel on Climate Change, range from SSP1, a sustainability pathway with rapid decarbonization, to SSP5, a fossil-fuel-intensive pathway. Under SSP5, global average temperatures could exceed 4 degrees Celsius above pre-industrial levels by 2100, with devastating consequences for ecosystems and human societies worldwide.
+
+Mitigation and Adaptation
+
+Responding to climate change requires both mitigation — reducing greenhouse gas emissions to limit future warming — and adaptation — adjusting to the changes that are already locked in due to past emissions. These two strategies are complementary; greater mitigation reduces the degree of adaptation required.
+
+Energy system transformation is the cornerstone of mitigation. Electricity generation from fossil fuels must be replaced by renewable sources — primarily solar and wind — and electrification must expand to cover transportation, heating, and industrial processes currently powered by fossil fuels. Solar and wind power costs have fallen dramatically over the past decade, making clean electricity increasingly cost-competitive with fossil fuels in most markets.
+
+Carbon capture and storage technologies aim to remove carbon dioxide from the atmosphere or prevent its release from industrial processes. Direct air capture machines use chemical processes to extract carbon dioxide from ambient air, but current costs remain high. Nature-based solutions — protecting and restoring forests, wetlands, and soils — offer carbon sequestration alongside biodiversity and ecosystem service benefits.
+
+Adaptation strategies span a wide range of sectors and scales. Coastal engineering — seawalls, managed retreat, and ecosystem-based approaches like restoring mangroves — addresses rising sea levels. Agricultural adaptation includes developing drought-resistant crop varieties, shifting planting dates, and diversifying farming systems. Heat action plans in cities provide early warning systems and cooling centers to protect vulnerable populations during extreme heat events.
