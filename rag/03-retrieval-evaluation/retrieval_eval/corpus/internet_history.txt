@@ -1,0 +1,41 @@
+A History of the Internet: From ARPANET to the Mobile Web
+
+The internet did not appear all at once; it evolved over five decades through a sequence of research projects, standards efforts, and infrastructure buildouts that together transformed a small academic experiment into a global communications system used by billions of people.
+
+ARPANET, funded by the United States Department of Defense's Advanced Research Projects Agency, became operational in 1969 and is widely regarded as the first network to implement packet switching, breaking data into small packets that could be routed independently across the network rather than requiring a dedicated circuit.
+
+Packet switching allows a single communication link to be shared efficiently among many simultaneous conversations, since packets from different sources can be interleaved on the same wire and reassembled at their destination, in contrast to the dedicated circuits used by the traditional telephone network.
+
+The TCP/IP protocol suite, developed by Vint Cerf and Robert Kahn, standardized how data is broken into packets, addressed, and reassembled, allowing different, independently operated networks to interconnect into a single network of networks, which is why the resulting system came to be called the internet.
+
+The Domain Name System, or DNS, translates human-readable domain names into the numeric IP addresses that computers use to route traffic, functioning as a distributed, hierarchical directory service that scales to billions of lookups per day without any central point of failure.
+
+In 1989, Tim Berners-Lee, working at CERN, proposed the World Wide Web, a system of interlinked hypertext documents accessed via the internet, and went on to write the first web browser, web server, and the HTTP protocol that defines how such documents are requested and delivered.
+
+HTML, the Hypertext Markup Language, describes the structure of a web page using nested tags, while HTTP, the Hypertext Transfer Protocol, defines the request-response cycle by which a browser asks a server for a page and the server returns it, forming the foundation of the web.
+
+The early 1990s browser era began with Mosaic, the first widely used graphical web browser, followed by Netscape Navigator, which commercialized the browser and sparked what became known as the browser wars against Microsoft's Internet Explorer later in the decade.
+
+Dial-up internet access, limited to the narrow bandwidth of a telephone line, gave way in the late 1990s and 2000s to broadband technologies such as digital subscriber line, or DSL, which used existing telephone wiring, and cable internet, which used the same coaxial infrastructure as cable television, both offering far higher speeds than dial-up modems.
+
+Fiber-optic internet, which transmits data as pulses of light through glass fibers, later superseded DSL and cable in many areas, offering dramatically higher bandwidth and lower latency than copper-based broadband technologies.
+
+The dot-com boom of the late 1990s saw a surge of investment in internet-based companies and e-commerce, followed by a sharp crash in 2000 to 2001 when many of these companies, lacking sustainable business models, failed; the survivors, such as Amazon and eBay, went on to become dominant e-commerce platforms.
+
+Search engines such as AltaVista and later Google made the rapidly growing web navigable by indexing pages and ranking them by relevance, with Google's PageRank algorithm, which ranked pages partly by the number and quality of links pointing to them, proving especially influential.
+
+The introduction of smartphones, especially following the 2007 launch of the iPhone, drove a rapid shift toward the mobile web, as touchscreen devices with always-on cellular data connections made browsing, email, and applications accessible away from a desktop computer, fundamentally changing how most people access the internet today.
+
+App stores, introduced alongside modern smartphones, created a new distribution channel for software, shifting much of internet usage away from browsers and toward dedicated mobile applications for messaging, social media, and commerce.
+
+Social media platforms such as Facebook, Twitter, and later Instagram and TikTok transformed the internet from a largely one-directional publishing medium into an interactive space built around user-generated content and algorithmically curated feeds.
+
+Cloud computing, popularized by services such as Amazon Web Services, allows businesses to rent computing power and storage on demand rather than operating their own physical servers, underpinning much of the modern internet's infrastructure.
+
+Net neutrality is the principle that internet service providers should treat all data on their networks equally, without charging differently or deliberately slowing traffic based on the content, platform, or application generating it, and has been the subject of ongoing regulatory debate.
+
+The transition from IPv4 to IPv6 was driven by the exhaustion of the roughly four billion addresses available under IPv4, with IPv6 providing a vastly larger address space to accommodate the growing number of internet-connected devices.
+
+Wireless standards evolved through successive cellular generations, from 2G digital voice and basic data, through 3G and 4G LTE mobile broadband, to 5G, alongside Wi-Fi standards that brought high-speed wireless networking to homes and offices.
+
+Modern internet infrastructure relies heavily on content delivery networks, or CDNs, and geographically distributed data centers to cache and serve content close to users, reducing latency and allowing services to handle massive, globally distributed traffic loads.

@@ -1,0 +1,41 @@
+Machine Learning: Foundations, Methods, and Evaluation
+
+Machine learning is a field of artificial intelligence in which algorithms improve their performance on a task through exposure to data, rather than through explicit, hand-coded rules. Three broad paradigms dominate the field: supervised learning, unsupervised learning, and reinforcement learning, each suited to different problem structures.
+
+Supervised learning is a machine learning paradigm in which a model learns from labeled training data, where every example is paired with the correct output. The model adjusts its internal parameters until its predictions closely match the labels provided, and once trained, it can generalize to new, unseen inputs. Common supervised tasks include classification and regression.
+
+Unsupervised learning works with unlabeled data, seeking hidden structure without any predefined output labels. Clustering algorithms such as k-means partition data points into groups based on similarity, while dimensionality reduction techniques like principal component analysis compress high-dimensional data into fewer dimensions while preserving variance.
+
+Reinforcement learning trains an agent to take actions in an environment in order to maximize cumulative reward. Unlike supervised learning, the agent is not told the correct action directly; instead it learns through trial and error, guided by reward signals that arrive after a sequence of decisions.
+
+A neural network is composed of layers of interconnected neurons. Each neuron computes a weighted sum of its inputs and passes the result through a nonlinear activation function such as ReLU, sigmoid, or tanh, allowing the network to model complex, nonlinear relationships in data. Stacking many such layers creates a deep neural network.
+
+Activation functions introduce the nonlinearity that lets neural networks approximate arbitrary functions. ReLU, or rectified linear unit, outputs zero for negative inputs and the input itself for positive inputs, and is favored in modern architectures because it avoids the vanishing-gradient problems associated with sigmoid and tanh in deep networks.
+
+Backpropagation computes the gradient of the loss function with respect to every weight in the network by applying the chain rule of calculus, propagating error signals backward from the output layer to the input layer. Gradient descent then updates each weight in the direction that reduces the loss, with the learning rate controlling the size of each update step.
+
+Optimizers refine plain gradient descent to converge faster and more reliably. Stochastic gradient descent updates weights using small random batches of data rather than the full dataset, while Adam combines momentum with adaptive per-parameter learning rates, making it a popular default choice for training deep networks.
+
+Overfitting occurs when a model performs very well on training data but fails to generalize to unseen data, effectively memorizing noise rather than learning the underlying pattern. Regularization techniques such as L2 weight decay and dropout combat overfitting by penalizing overly complex models or randomly disabling neurons during training.
+
+Dropout works by randomly setting a fraction of neuron activations to zero during each training step, forcing the network to learn redundant, robust representations rather than relying on any single neuron. At test time, dropout is disabled and activations are scaled to account for the neurons that were dropped during training.
+
+The bias-variance tradeoff describes the tension between a model that is too simple to capture the underlying pattern, known as high bias or underfitting, and a model that is too complex and captures noise as if it were signal, known as high variance or overfitting. Good model selection balances the two.
+
+Cross-validation, most commonly k-fold cross-validation, splits the dataset into k equally sized folds, training on k-1 folds and validating on the remaining fold, rotating through all folds to produce a robust estimate of generalization performance without needing a separate holdout set.
+
+Precision measures the fraction of predicted positive cases that are actually correct, while recall measures the fraction of actual positive cases that the model successfully identifies. The F1 score is the harmonic mean of precision and recall, providing a single metric that balances both concerns, especially useful when class distributions are imbalanced.
+
+For imbalanced classification problems, the ROC-AUC metric, area under the receiver operating characteristic curve, is often reported alongside precision and recall because accuracy alone can be misleading when one class vastly outnumbers the other.
+
+Ensemble methods combine multiple models to improve predictive performance. Random forests build many decision trees on random subsets of data and features, then average their predictions, while gradient boosting builds trees sequentially, each one correcting the errors of the previous ensemble.
+
+Decision trees split the feature space into regions by repeatedly asking yes-or-no questions about feature values, producing a model that is easy to interpret but prone to overfitting when grown too deep without pruning or ensemble averaging.
+
+Support vector machines find the hyperplane that maximizes the margin between classes, and through the kernel trick can implicitly map data into higher-dimensional spaces to separate classes that are not linearly separable in the original feature space.
+
+Feature engineering, the process of transforming raw data into informative input variables, often has as much impact on model performance as the choice of algorithm itself, since even the most powerful model cannot learn a pattern that its input features do not represent.
+
+Hyperparameter tuning searches over settings such as learning rate, network depth, and regularization strength that are not learned directly from data but instead configured before training, commonly using grid search, random search, or Bayesian optimization.
+
+Transfer learning reuses a model trained on one large dataset as the starting point for a related task with less data, fine-tuning some or all of its layers, which has become especially common in computer vision and natural language processing where large pretrained models are widely available.

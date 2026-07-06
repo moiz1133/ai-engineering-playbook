@@ -1,0 +1,41 @@
+Large Language Model Systems: Architecture, Training, and Applications
+
+Modern large language models are built on a sequence of innovations spanning model architecture, training techniques, and system design that together allow a single model to generate fluent text, follow instructions, retrieve external knowledge, and take actions through tools.
+
+The transformer architecture, introduced in 2017, relies on a self-attention mechanism that allows the model to weigh the relevance of every other token in the input when computing the representation of a given token, capturing long-range dependencies far more effectively than earlier recurrent architectures.
+
+Multi-head attention runs several attention computations in parallel, each potentially focusing on different relationships between tokens, such as syntactic structure or semantic similarity, and combines their outputs to form a richer representation of the input sequence.
+
+Pretraining exposes a transformer to enormous quantities of text, typically trained to predict the next token given the preceding context, and it is through this simple objective, applied at massive scale, that the model acquires broad knowledge of language, facts, and reasoning patterns.
+
+Fine-tuning takes a pretrained model and further trains it on a smaller, more specific dataset, adjusting its weights to specialize in a particular task, domain, or behavior without needing to train a model from scratch.
+
+Reinforcement learning from human feedback, or RLHF, aligns a pretrained language model with human preferences by training a reward model on human rankings of candidate responses, then using reinforcement learning to fine-tune the language model to produce outputs the reward model scores highly.
+
+Instruction tuning fine-tunes a pretrained model on a dataset of instructions paired with desired responses, teaching the model to follow natural-language commands rather than simply continuing text in the style of its pretraining data.
+
+Retrieval-augmented generation, or RAG, addresses the problem of hallucination, where a language model generates fluent but factually incorrect text, by retrieving relevant documents from an external knowledge source and inserting them into the model's context before it generates a response, grounding the output in retrieved evidence.
+
+Vector search underpins most RAG systems: documents are converted into numerical embedding vectors that capture semantic meaning, stored in a vector database, and retrieved by finding the vectors most similar to the embedding of an incoming query.
+
+Hallucination occurs because a language model is trained to produce plausible, fluent continuations of text rather than to verify factual accuracy, so it can state incorrect information confidently and with the same fluent tone as correct information, making hallucinations difficult for users to detect without independent verification.
+
+LLM-based agents extend a language model beyond text generation by giving it the ability to call external tools, such as search engines, calculators, or code interpreters, and to use the results of those tool calls to decide on subsequent actions, enabling multi-step tasks that a single forward pass could not accomplish.
+
+Tool calling, sometimes called function calling, works by having the model output a structured request specifying which tool to invoke and with what arguments, which the surrounding system then executes and feeds the result back into the model's context.
+
+Chain-of-thought reasoning prompts a model to produce intermediate reasoning steps before arriving at a final answer, which has been shown to improve performance on tasks that require multi-step arithmetic, logic, or planning compared to asking for a direct answer.
+
+The context window is the maximum number of tokens a model can attend to at once, encompassing both the prompt and the generated output, and its size determines how much retrieved evidence, conversation history, or document content can be provided to the model at inference time.
+
+Embeddings are dense numerical vectors produced by a model to represent the meaning of a piece of text, positioned in a high-dimensional space such that semantically similar pieces of text have vectors that are close together under a distance metric such as cosine similarity.
+
+Choosing between fine-tuning and prompting a model depends on the task: prompting, including few-shot examples in the prompt, is faster to iterate on and requires no training, while fine-tuning can more deeply and durably change a model's behavior at the cost of additional data and compute.
+
+Prompt engineering is the practice of carefully designing the instructions, examples, and context given to a language model in order to elicit more accurate, relevant, or well-formatted outputs without changing the model's underlying weights.
+
+Evaluating large language models relies on a mix of automated benchmarks covering knowledge, reasoning, and coding tasks, alongside human evaluation and LLM-as-judge approaches, since many desirable qualities such as helpfulness and coherence are difficult to capture with a single automatic metric.
+
+Safety and alignment research studies how to make language models more honest, harmless, and aligned with human intent, addressing risks such as generating harmful content, being manipulated through adversarial prompts, or pursuing goals misaligned with what users actually want.
+
+Multimodal models extend the transformer architecture to process inputs beyond text, such as images or audio, by converting them into token-like representations that can be processed alongside text tokens within the same attention mechanism.

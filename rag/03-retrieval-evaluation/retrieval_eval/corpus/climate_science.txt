@@ -1,0 +1,41 @@
+Climate Science: Mechanisms, Feedbacks, and Tipping Points
+
+Earth's climate system is governed by a balance between incoming solar radiation and outgoing infrared radiation. Small, sustained shifts in this energy balance, caused by changes in atmospheric composition, ocean circulation, or solar output, can accumulate into large long-term changes in global temperature.
+
+The greenhouse effect describes how gases such as carbon dioxide, methane, and water vapor trap outgoing infrared radiation in the atmosphere, warming the planet's surface above the temperature it would have without an atmosphere. Since the industrial revolution, human emissions of carbon dioxide from burning fossil fuels have significantly intensified this effect.
+
+Radiative forcing quantifies the change in energy balance caused by a given factor, such as increased atmospheric carbon dioxide, measured in watts per square meter; positive radiative forcing warms the climate system while negative forcing, such as from reflective aerosols, cools it.
+
+The ice-albedo feedback loop is a self-reinforcing cycle in which melting ice and snow expose darker ocean or land surfaces that absorb more sunlight than the reflective ice did, accelerating further warming and further ice loss, particularly pronounced in the Arctic.
+
+The water vapor feedback amplifies warming because warmer air holds more water vapor, itself a potent greenhouse gas, creating a positive feedback loop where initial warming from carbon dioxide leads to more water vapor, which causes additional warming.
+
+Permafrost thaw releases methane and carbon dioxide that has been locked in frozen soil for thousands of years, and because methane is a far more potent greenhouse gas than carbon dioxide over short timescales, this creates a dangerous tipping point where warming triggers further warming.
+
+The Atlantic Meridional Overturning Circulation, or AMOC, is a system of ocean currents that transports warm water northward near the surface and cold water southward at depth, and its potential slowdown or collapse is considered one of the most consequential tipping points in the climate system because of its influence on regional weather patterns.
+
+Climate tipping points are thresholds beyond which a small additional change triggers a large, often irreversible shift in the climate system, such as the collapse of an ice sheet or the dieback of a rainforest, potentially locking in consequences for centuries even if emissions are later reduced.
+
+The West Antarctic and Greenland ice sheets hold enough frozen water to raise global sea levels by many meters if they were to collapse; satellite observations show both are already losing mass, and beyond a certain point the collapse of marine-based ice sheets may become self-sustaining and irreversible.
+
+The carbon cycle describes the movement of carbon between the atmosphere, oceans, land, and living organisms; human fossil fuel combustion and deforestation have shifted the balance of this cycle, adding carbon to the atmosphere faster than natural sinks can absorb it.
+
+Ocean acidification occurs as oceans absorb roughly a quarter of human carbon dioxide emissions, lowering seawater pH and making it harder for corals, shellfish, and other calcifying organisms to build their calcium carbonate skeletons and shells.
+
+Sea level rise results from two main processes: thermal expansion of ocean water as it warms, and the addition of melted water from land-based glaciers and ice sheets, with rates of rise accelerating over recent decades according to satellite altimetry.
+
+Extreme weather events, including heat waves, heavy precipitation, and prolonged droughts, are becoming more frequent and intense as background warming shifts the statistical distribution of possible weather outcomes toward more extreme values.
+
+Coral reef dieback and Amazon rainforest dieback are both cited as potential tipping elements, where sustained warming or reduced rainfall could push these ecosystems past a threshold into a different, less biodiverse stable state.
+
+Paleoclimate evidence from ice cores, drilled from Antarctica and Greenland, preserves bubbles of ancient atmosphere and allows scientists to reconstruct temperature and greenhouse gas concentrations going back hundreds of thousands of years.
+
+Climate models, or general circulation models, simulate the physics of the atmosphere and oceans on supercomputers to project how the climate system will respond to different future emissions scenarios, and are validated by their ability to reproduce past observed climate.
+
+Mitigation refers to efforts that reduce greenhouse gas emissions or remove carbon from the atmosphere, while adaptation refers to adjusting human systems, such as infrastructure and agriculture, to cope with climate changes that are already underway or unavoidable.
+
+The transition to renewable energy sources such as solar and wind power, alongside electrification of transport and heating, is considered a central pillar of mitigation strategies aimed at reducing reliance on fossil fuels.
+
+The Paris Agreement, adopted in 2015, is an international treaty in which participating countries commit to limit global warming to well below two degrees Celsius above pre-industrial levels, with an aspirational target of one and a half degrees.
+
+A carbon budget represents the total amount of carbon dioxide that can still be emitted while keeping warming below a given threshold; reaching net-zero emissions, where remaining emissions are balanced by removals, is the point at which additional warming from carbon dioxide would largely stop.

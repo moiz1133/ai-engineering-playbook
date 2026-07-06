@@ -1,0 +1,41 @@
+Database Systems: Relational Foundations, Transactions, and Modern Alternatives
+
+Database management systems organize, store, and retrieve data reliably and efficiently, and have evolved from early relational systems into a diverse ecosystem that includes document stores, key-value stores, graph databases, and, more recently, vector databases.
+
+The relational model, introduced by Edgar Codd, organizes data into tables of rows and columns, with each table representing an entity type and each row representing a single record; Structured Query Language, or SQL, is the standard language used to define, query, and modify data stored in relational tables.
+
+ACID is an acronym describing four properties that guarantee reliable database transactions: atomicity ensures a transaction either completes entirely or has no effect at all, consistency ensures a transaction moves the database from one valid state to another, isolation ensures concurrent transactions do not interfere with each other, and durability ensures committed changes survive a crash.
+
+Atomicity, one of the four ACID properties, guarantees that a multi-step operation such as transferring money between two bank accounts either fully succeeds, updating both the debited and credited balances, or fully fails and leaves both balances unchanged, with no possibility of a partial update.
+
+Most relational databases speed up lookups using an index, commonly implemented as a B-tree, a balanced tree structure that keeps data sorted and allows searches, insertions, and deletions in logarithmic time, avoiding the need to scan every row in a table.
+
+The query optimizer is a component of a relational database that examines a submitted SQL query and chooses an efficient execution plan, deciding which indexes to use and in what order to join tables, based on statistics about the size and distribution of the underlying data.
+
+Normalization organizes relational tables to reduce data redundancy and avoid update anomalies, typically by decomposing a table into smaller related tables connected by foreign keys, following a series of normal forms that progressively eliminate different kinds of redundancy.
+
+NoSQL databases relax the rigid schema and relational structure of traditional databases to better handle unstructured or rapidly changing data, and are broadly categorized into document databases that store JSON-like documents, key-value stores that map simple keys to arbitrary values, and graph databases that model data as nodes and relationships.
+
+Document databases, such as MongoDB, store records as JSON-like documents that can have nested fields and varying structure from one document to the next, making them well suited to applications where the shape of the data changes frequently or is not known in advance.
+
+Key-value stores, such as Redis, provide extremely fast reads and writes by mapping a simple key directly to a value, often held in memory, and are commonly used for caching, session storage, and other latency-sensitive workloads rather than as a system of record.
+
+Graph databases model data explicitly as nodes and the relationships, or edges, between them, making them well suited to queries that traverse many-to-many relationships, such as social networks, recommendation engines, or fraud detection.
+
+The CAP theorem states that a distributed database can provide at most two of three guarantees simultaneously: consistency, availability, and partition tolerance, forcing distributed system designers to make explicit tradeoffs, especially when a network partition occurs.
+
+Sharding splits a large database horizontally across multiple servers, with each shard holding a subset of the rows, while replication copies data across multiple servers to improve availability and read throughput; distributed databases commonly combine both techniques.
+
+Vector databases store high-dimensional embedding vectors produced by machine learning models and support similarity search, retrieving the vectors nearest to a query vector under a distance metric such as cosine similarity or Euclidean distance.
+
+Because exact nearest-neighbor search becomes prohibitively slow at large scale, vector databases typically use approximate nearest neighbor algorithms such as HNSW, hierarchical navigable small world graphs, which build a multi-layer graph structure that allows searches to quickly navigate to a vector's approximate nearest neighbors while sacrificing a small amount of accuracy for large gains in speed.
+
+Transactions and concurrency control mechanisms, such as locking and multi-version concurrency control, allow multiple users to read and write a database at the same time while preserving the isolation guarantee that each transaction appears to execute as if it were the only one running.
+
+Data warehouses are databases optimized for analytical queries over large historical datasets, typically populated through extract-transform-load pipelines from many operational source systems, and are queried far less frequently but with much larger, more complex queries than operational databases.
+
+Column-oriented storage, used by many analytical databases, stores each column of a table contiguously on disk rather than each row, which dramatically speeds up queries that aggregate or scan a small number of columns across many rows.
+
+Caching layers, often built on key-value stores, sit in front of a primary database to serve frequently requested data from fast memory rather than repeatedly querying slower disk-backed storage, reducing both latency and load on the primary database.
+
+Database backup and recovery procedures, including periodic full backups and continuous write-ahead logging, allow a database to be restored to a consistent state after hardware failure, data corruption, or accidental deletion.
