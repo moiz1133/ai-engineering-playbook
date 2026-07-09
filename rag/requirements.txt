@@ -8,4 +8,5 @@ openai
 psutil
 pypdf
 python-dotenv
+rank-bm25
 tabulate

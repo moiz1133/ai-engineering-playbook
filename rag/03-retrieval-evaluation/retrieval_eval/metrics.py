@@ -49,7 +49,8 @@ def hit_at_k(results_list: List[List[str]], relevant_ids_list: List[List[str]],
 def metrics_report(label: str, results_list: List[List[str]],
                     relevant_ids_list: List[List[str]],
                     query_types: List[str] = None) -> Dict:
-    """Compute MRR, Hit@1/3/5, and a per-query-type MRR/Hit@3 breakdown."""
+    """Compute MRR, Hit@1/3/5, a per-query-type MRR/Hit@3 breakdown, and stash
+    raw_results (the ranked chunk_ids per query) for downstream analysis."""
     report = {
         "method": label,
         "mrr": mrr(results_list, relevant_ids_list),
@@ -57,6 +58,9 @@ def metrics_report(label: str, results_list: List[List[str]],
         "hit_at_3": hit_at_k(results_list, relevant_ids_list, k=3),
         "hit_at_5": hit_at_k(results_list, relevant_ids_list, k=5),
         "by_type": {},
+        # Raw per-query ranked chunk_ids — kept so downstream analysis (e.g.
+        # disagreement analysis between two methods) doesn't need to re-run retrieval.
+        "raw_results": results_list,
     }
 
     if query_types is not None:

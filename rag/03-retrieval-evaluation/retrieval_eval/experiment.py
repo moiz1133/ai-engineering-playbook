@@ -1,8 +1,8 @@
 """Run all retrieval methods over the shared eval set and collect metrics.
 
-WHAT: single shared eval set used by all three retrieval methods
+WHAT: single shared eval set used by all four retrieval methods
 WHY: fair comparison requires identical corpus and embeddings — only retrieval
-     logic changes between baseline / rerank / MMR
+     logic changes between baseline / rerank / MMR / hybrid (BM25+RRF)
 """
 
 from __future__ import annotations
@@ -17,10 +17,18 @@ from openai import OpenAI
 import retriever_rerank
 from metrics import hit_at_k, metrics_report, mrr
 from retriever_baseline import retrieve_baseline
+from retriever_hybrid import (
+    analyse_disagreements,
+    build_bm25_index,
+    retrieve_bm25,
+    retrieve_hybrid,
+    retrieve_vector_for_fusion,
+)
 from retriever_mmr import retrieve_mmr
 from retriever_rerank import retrieve_with_rerank
 
 LAMBDA_SWEEP = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+RRF_K_SWEEP = [10, 30, 60, 100]
 
 
 def _run_method(label: str, questions: List[str], relevant_ids_list: List[List[str]],
@@ -44,7 +52,8 @@ def _run_method(label: str, questions: List[str], relevant_ids_list: List[List[s
 
 def run_all_experiments(collection: chromadb.Collection, openai_client: OpenAI,
                          cohere_client, eval_set: List[dict]) -> Dict:
-    """Run baseline, Cohere rerank, and MMR (multiple lambdas) over eval_set."""
+    """Run baseline, Cohere rerank, MMR (multiple lambdas), and hybrid BM25+RRF
+    (plus a BM25-only baseline and an RRF k sweep) over eval_set."""
     answerable = [item for item in eval_set if item.get("relevant_chunk_ids")]
     questions = [item["question"] for item in answerable]
     relevant_ids_list = [item["relevant_chunk_ids"] for item in answerable]
@@ -93,6 +102,70 @@ def run_all_experiments(collection: chromadb.Collection, openai_client: OpenAI,
         }
     results["mmr_lambda_sweep"] = sweep
 
+    # Build BM25 index once — shared across all hybrid and BM25-only calls
+    bm25_index, bm25_chunk_ids = build_bm25_index(collection)
+
+    results["hybrid_rrf"] = _run_method(
+        "Hybrid (BM25+RRF)", questions, relevant_ids_list, query_types,
+        lambda q: retrieve_hybrid(q, collection, bm25_index, bm25_chunk_ids, openai_client, top_k=5),
+    )
+
+    # BM25-only as a standalone baseline for comparison
+    results["bm25_only"] = _run_method(
+        "BM25 only", questions, relevant_ids_list, query_types,
+        lambda q: [cid for cid, _ in retrieve_bm25(q, bm25_index, bm25_chunk_ids, top_k=5)],
+    )
+
+    # WHAT: k controls how much RRF dampens rank-1 advantage
+    # k=10: rank 1 = 1/11 = 0.091, rank 2 = 1/12 = 0.083 → large gap (rank 1 dominates)
+    # k=60: rank 1 = 1/61 = 0.016, rank 2 = 1/62 = 0.016 → small gap (smoother fusion)
+    # WHY sweep: optimal k depends on corpus — 60 is the standard default but check empirically
+    rrf_k_sweep: Dict[int, Dict] = {}
+    for rrf_k in RRF_K_SWEEP:
+        sweep_results = [
+            retrieve_hybrid(q, collection, bm25_index, bm25_chunk_ids, openai_client,
+                             top_k=5, rrf_k=rrf_k)
+            for q in questions
+        ]
+        rrf_k_sweep[rrf_k] = {
+            "mrr": mrr(sweep_results, relevant_ids_list),
+            "hit_at_3": hit_at_k(sweep_results, relevant_ids_list, k=3),
+        }
+    results["rrf_k_sweep"] = rrf_k_sweep
+
+    # Disagreement analysis needs the raw BM25-only and vector-only top-20 pools
+    # that fed into the hybrid fusion for each query (not just the fused top-5).
+    bm25_all = [
+        [cid for cid, _ in retrieve_bm25(q, bm25_index, bm25_chunk_ids, top_k=20)]
+        for q in questions
+    ]
+    vector_all = [
+        [cid for cid, _ in retrieve_vector_for_fusion(q, collection, openai_client, top_k=20)]
+        for q in questions
+    ]
+    results["disagreements"] = analyse_disagreements(
+        answerable,
+        results["baseline"]["raw_results"],
+        results["hybrid_rrf"]["raw_results"],
+        bm25_all,
+        vector_all,
+    )
+
+    # Per query-type count of how often hybrid's reciprocal rank beats baseline's —
+    # feeds the "When hybrid beats baseline" README section with real counts.
+    baseline_raw = results["baseline"]["raw_results"]
+    hybrid_raw = results["hybrid_rrf"]["raw_results"]
+    hybrid_vs_baseline_by_type: Dict[str, Dict] = {}
+    for qtype in ("factual", "multi_concept", "rephrased"):
+        idxs = [i for i, t in enumerate(query_types) if t == qtype]
+        improved = sum(
+            1 for i in idxs
+            if mrr([hybrid_raw[i]], [relevant_ids_list[i]]) >
+            mrr([baseline_raw[i]], [relevant_ids_list[i]])
+        )
+        hybrid_vs_baseline_by_type[qtype] = {"hybrid_improved": improved, "total": len(idxs)}
+    results["hybrid_vs_baseline_by_type"] = hybrid_vs_baseline_by_type
+
     results["_meta"] = {
         "total_eval_items": len(eval_set),
         "answerable_eval_items": len(answerable),
@@ -129,8 +202,17 @@ def run_all_experiments(collection: chromadb.Collection, openai_client: OpenAI,
 #   Does NOT improve MRR vs baseline in most single-doc retrieval scenarios —
 #   its value is diversity of information, not rank position of correct answer.
 #
+# Hybrid search (BM25 + vector RRF):
+#   BM25 ranked list + vector ranked list -> Reciprocal Rank Fusion -> single fused list.
+#   Fixes exact-term queries that pure cosine misses (semantic drift) while still
+#   catching paraphrases that pure BM25 misses (no shared vocabulary).
+#   RRF uses only rank position, not raw scores, so BM25 and cosine — which live on
+#   totally different scales — never need score normalisation. See retriever_hybrid.py.
+#
 # When to use each:
 #   Cosine baseline -> fast, good enough for focused single-concept queries
 #   Cohere rerank   -> when precision matters and 600ms latency is acceptable
 #   MMR             -> when downstream LLM needs diverse context (multi-step reasoning)
+#   Hybrid BM25+RRF -> when queries mix exact-term lookups and semantic questions,
+#                      at near-zero extra latency over vector search alone
 # ------------------------------------------------------------------------------------
