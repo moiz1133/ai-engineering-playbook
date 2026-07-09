@@ -1,0 +1,11 @@
+chromadb
+cohere
+fpdf2
+hnswlib
+matplotlib
+numpy
+openai
+psutil
+pypdf
+python-dotenv
+tabulate
