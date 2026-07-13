@@ -70,9 +70,10 @@ def llm_request(
     start = time.perf_counter()
 
     # -- STEP 1: CACHE LOOKUP ------------------------------------------------
+    query_embedding = None
     if not skip_cache:
         cached = cache.lookup(query)
-        if cached:
+        if cached["cache_hit"]:
             latency_ms = int((time.perf_counter() - start) * 1000)
             if logger:
                 logger.log("cache_hit", call_id=call_id, similarity=cached["similarity"],
@@ -87,6 +88,9 @@ def llm_request(
                 "cost_usd": 0.0,
                 "latency_ms": latency_ms,
             }
+        # WHAT: thread the embedding through lookup -> store to avoid a second
+        #       API call — see semantic_cache.SemanticCache.lookup for the why
+        query_embedding = cached["query_embedding"]
     # WHAT: cache lookup FIRST — if hit, never touch circuit breaker or LLM
     # WHY: cache hits cost $0 and bypass the budget entirely
 
@@ -137,8 +141,8 @@ def llm_request(
 
     # -- STEP 6: CACHE STORE ----------------------------------------------------
     if not skip_cache:
-        # Reuse the embedding already computed during lookup — do NOT re-embed
-        cache.store(query, cache._embed(query), response_text, actual_cost)
+        # Reuse the embedding computed during STEP 1's lookup — do NOT re-embed
+        cache.store(query, query_embedding, response_text, actual_cost)
     # WHAT: store AFTER the call — cache only successful LLM responses
     # WHY: caching a failed or empty response would poison future cache hits
 

@@ -16,7 +16,7 @@ for asyncio, use asyncio.Lock().
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import numpy as np
 from openai import OpenAI
@@ -47,9 +47,10 @@ class SemanticCache:
     def _cosine_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
         return float(np.dot(a, b))  # valid because both are unit vectors
 
-    def lookup(self, query: str) -> Optional[Dict]:
+    def lookup(self, query: str) -> Dict:
         """Return the cached response for the most similar cached query if its
-        similarity clears the threshold; otherwise None.
+        similarity clears the threshold; otherwise a miss result carrying the
+        query's embedding.
 
         WHAT: similarity >= 0.95 means the new query is semantically
               near-identical to a cached one
@@ -57,6 +58,16 @@ class SemanticCache:
              cached responses for similar-sounding but different questions
         NOTE: log best_similarity even on a miss — helps calibrate the
               threshold over time
+
+        WHAT: on a miss, this also returns query_embedding — the embedding
+              computed here to search the cache
+        WHY: thread the embedding through lookup() -> store() to avoid a
+             second, redundant embedding API call on every cache miss (see
+             middleware.llm_request, which passes this straight into
+             cache.store() instead of re-embedding). text-embedding-3-small
+             costs $0.00000002/token — tiny per call, but at scale (10k
+             queries/day) that's 10k avoidable API calls that could hit rate
+             limits, not just ~$0.002/day of avoidable spend.
         """
         query_vec = self._embed(query)
 
@@ -83,7 +94,7 @@ class SemanticCache:
         self.stats["misses"] += 1
         print(f"[SEMANTIC CACHE] MISS | best_similarity={max(best_sim, 0.0):.3f} | "
               f"query_preview={query[:60]!r}")
-        return None
+        return {"cache_hit": False, "query_embedding": query_vec}
 
     def store(self, query: str, query_embedding: np.ndarray, response: str,
               cost_usd: float = 0.0) -> None:
