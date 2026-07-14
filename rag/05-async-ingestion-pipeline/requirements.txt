@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+celery[redis]
+redis
+openai
+chromadb
+pypdf
+numpy
+python-multipart
+httpx
+pydantic-settings
