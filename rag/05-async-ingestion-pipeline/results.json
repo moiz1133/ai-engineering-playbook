@@ -1,0 +1,140 @@
+{
+  "demo_log": [
+    {
+      "doc_id": "b6054a87-7ed1-4c03-89c6-c2b3402c56ae",
+      "filename": "ml_basics.txt",
+      "task_result": {
+        "doc_id": "b6054a87-7ed1-4c03-89c6-c2b3402c56ae",
+        "status": "complete",
+        "chunk_count": 1
+      },
+      "task_error": null,
+      "final_status": {
+        "doc_id": "b6054a87-7ed1-4c03-89c6-c2b3402c56ae",
+        "stage": "complete",
+        "detail": "Ingested 1 chunks into 'default'",
+        "chunk_total": 1,
+        "chunks_done": 1,
+        "pct_complete": 100,
+        "collection": "default",
+        "updated_at": "2026-07-14T10:52:36.400418+00:00"
+      }
+    },
+    {
+      "doc_id": "666a5c4a-bef7-4f59-80ec-8c5450243180",
+      "filename": "climate.txt",
+      "task_result": {
+        "doc_id": "666a5c4a-bef7-4f59-80ec-8c5450243180",
+        "status": "complete",
+        "chunk_count": 1
+      },
+      "task_error": null,
+      "final_status": {
+        "doc_id": "666a5c4a-bef7-4f59-80ec-8c5450243180",
+        "stage": "complete",
+        "detail": "Ingested 1 chunks into 'default'",
+        "chunk_total": 1,
+        "chunks_done": 1,
+        "pct_complete": 100,
+        "collection": "default",
+        "updated_at": "2026-07-14T10:52:37.088943+00:00"
+      }
+    },
+    {
+      "doc_id": "fb9c2b7f-39bf-4633-9c82-e4ccb89bb05d",
+      "filename": "bad_file.xyz",
+      "task_result": null,
+      "task_error": "UnsupportedFileTypeError: Unsupported file type: xyz. Expected: .pdf or .txt",
+      "final_status": {
+        "doc_id": "fb9c2b7f-39bf-4633-9c82-e4ccb89bb05d",
+        "stage": "failed",
+        "detail": "Failed at validation: Unsupported file type: xyz. Expected: .pdf or .txt",
+        "chunk_total": 0,
+        "chunks_done": 0,
+        "pct_complete": 0,
+        "updated_at": "2026-07-14T10:52:37.090785+00:00"
+      }
+    },
+    {
+      "doc_id": "113bf938-ad34-48f1-a10e-ef4cff00dfa9",
+      "filename": "empty_file.txt",
+      "task_result": null,
+      "task_error": "IngestionError: Document contains no extractable text",
+      "final_status": {
+        "doc_id": "113bf938-ad34-48f1-a10e-ef4cff00dfa9",
+        "stage": "failed",
+        "detail": "Failed at unknown: Document contains no extractable text",
+        "chunk_total": 0,
+        "chunks_done": 0,
+        "pct_complete": 0,
+        "updated_at": "2026-07-14T10:52:37.092674+00:00"
+      }
+    }
+  ],
+  "dlq_before_retry": [
+    {
+      "doc_id": "113bf938-ad34-48f1-a10e-ef4cff00dfa9",
+      "filename": "empty_file.txt",
+      "error_type": "IngestionError",
+      "error_message": "Document contains no extractable text",
+      "failed_stage": "unknown",
+      "attempt": 0,
+      "task_id": null,
+      "file_content_b64": "",
+      "collection_name": "default",
+      "failed_at": "2026-07-14T10:52:37.092841+00:00"
+    },
+    {
+      "doc_id": "fb9c2b7f-39bf-4633-9c82-e4ccb89bb05d",
+      "filename": "bad_file.xyz",
+      "error_type": "UnsupportedFileTypeError",
+      "error_message": "Unsupported file type: xyz. Expected: .pdf or .txt",
+      "failed_stage": "validation",
+      "attempt": 0,
+      "task_id": null,
+      "file_content_b64": "U2hvdWxkIGZhaWwgLS0gYmFkIGV4dGVuc2lvbg==",
+      "collection_name": "default",
+      "failed_at": "2026-07-14T10:52:37.090940+00:00"
+    }
+  ],
+  "dlq_depth_before_retry": 2,
+  "retried_entry": {
+    "doc_id": "fb9c2b7f-39bf-4633-9c82-e4ccb89bb05d",
+    "filename": "bad_file.xyz",
+    "error_type": "UnsupportedFileTypeError",
+    "error_message": "Unsupported file type: xyz. Expected: .pdf or .txt",
+    "failed_stage": "validation",
+    "attempt": 0,
+    "task_id": null,
+    "file_content_b64": "U2hvdWxkIGZhaWwgLS0gYmFkIGV4dGVuc2lvbg==",
+    "collection_name": "default",
+    "failed_at": "2026-07-14T10:52:37.090940+00:00"
+  },
+  "dlq_after_retry": [
+    {
+      "doc_id": "fb9c2b7f-39bf-4633-9c82-e4ccb89bb05d",
+      "filename": "bad_file.xyz",
+      "error_type": "UnsupportedFileTypeError",
+      "error_message": "Unsupported file type: xyz. Expected: .pdf or .txt",
+      "failed_stage": "validation",
+      "attempt": 0,
+      "task_id": "retry-fb9c2b7f",
+      "file_content_b64": "U2hvdWxkIGZhaWwgLS0gYmFkIGV4dGVuc2lvbg==",
+      "collection_name": "default",
+      "failed_at": "2026-07-14T10:52:37.205122+00:00"
+    },
+    {
+      "doc_id": "113bf938-ad34-48f1-a10e-ef4cff00dfa9",
+      "filename": "empty_file.txt",
+      "error_type": "IngestionError",
+      "error_message": "Document contains no extractable text",
+      "failed_stage": "unknown",
+      "attempt": 0,
+      "task_id": null,
+      "file_content_b64": "",
+      "collection_name": "default",
+      "failed_at": "2026-07-14T10:52:37.092841+00:00"
+    }
+  ],
+  "dlq_depth_after_retry": 2
+}
