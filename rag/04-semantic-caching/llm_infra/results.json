@@ -1,7 +1,7 @@
 {
   "scenario_1_simple": [
     {
-      "call_id": "e2ab9aa3",
+      "call_id": "10a3ea7b",
       "response": "The capital of France is Paris.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
@@ -10,7 +10,7 @@
       "prompt_tokens": 24,
       "completion_tokens": 7,
       "cost_usd": 7.8e-06,
-      "latency_ms": 6390,
+      "latency_ms": 7638,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
@@ -22,43 +22,43 @@
       }
     },
     {
-      "call_id": "ff891002",
-      "response": "The invention of the telephone is most commonly attributed to Alexander Graham Bell, who was granted the first US patent for the invention of an \"improvement in telegraphy\" which he described as a method of transmitting vocal or other sounds telegraphically. He was awarded the patent on March 7, 1876. However, it is worth noting that other inventors, such as Elisha Gray and Antonio Meucci, also made significant contributions to the development of the telephone. Meucci, in particular, is recognized for his early work on voice communication technology, and he filed a caveat for his invention in 1871, although he did not secure a patent.",
+      "call_id": "b099b453",
+      "response": "The invention of the telephone is most commonly attributed to Alexander Graham Bell, who was awarded the first US patent for the invention in 1876. However, it is worth noting that there were other inventors, such as Elisha Gray and Antonio Meucci, who also made significant contributions to the development of voice communication technology around the same time. Meucci, in particular, is recognized for his work in the 1850s and 1860s, and some believe he should be credited with the invention due to his early experiments and patents. Nevertheless, Bell is the figure most widely associated with the telephone's invention.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
       "complexity": "simple",
       "routing_confidence": 0.7999999999999999,
       "prompt_tokens": 22,
-      "completion_tokens": 135,
-      "cost_usd": 8.429999999999999e-05,
-      "latency_ms": 3660,
+      "completion_tokens": 125,
+      "cost_usd": 7.829999999999999e-05,
+      "latency_ms": 3509,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 9.209999999999999e-05,
-        "remaining_usd": 0.049907900000000005,
-        "utilisation_pct": 0.18419999999999997,
+        "spent_usd": 8.609999999999999e-05,
+        "remaining_usd": 0.049913900000000004,
+        "utilisation_pct": 0.1722,
         "call_count": 2,
         "opened_at": null
       }
     },
     {
-      "call_id": "20ef30c0",
-      "response": "Machine learning is a subset of artificial intelligence that involves the development of algorithms and statistical models that enable computers to learn from and make predictions or decisions based on data.",
+      "call_id": "15d912ff",
+      "response": "Machine learning is a subset of artificial intelligence that enables systems to learn from data, identify patterns, and make decisions with minimal human intervention.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
       "complexity": "simple",
       "routing_confidence": 0.85,
       "prompt_tokens": 24,
-      "completion_tokens": 32,
-      "cost_usd": 2.28e-05,
-      "latency_ms": 1747,
+      "completion_tokens": 27,
+      "cost_usd": 1.98e-05,
+      "latency_ms": 1457,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 0.00011489999999999999,
-        "remaining_usd": 0.0498851,
-        "utilisation_pct": 0.22979999999999998,
+        "spent_usd": 0.0001059,
+        "remaining_usd": 0.049894100000000004,
+        "utilisation_pct": 0.21179999999999996,
         "call_count": 3,
         "opened_at": null
       }
@@ -66,8 +66,8 @@
   ],
   "scenario_2_complex": [
     {
-      "call_id": "216f9dea",
-      "response": "In a production Retrieval-Augmented Generation (RAG) system, the choice of indexing method can significantly impact the performance, efficiency, and scalability of the system. Two popular indexing methods for approximate nearest neighbor (ANN) search are Hierarchical Navigable Small World (HNSW) and Inverted File (IVF) indexing. Each method has its own tradeoffs:\n\n### HNSW (Hierarchical Navigable Small World)\n\n#### Advantages:\n1. **High Recall and Precision**: HNSW tends to achieve high recall and precision, making it suitable for tasks where accuracy is critical.\n2. **Fast Query Time**: Generally, HNSW offers fast query times, especially in high-dimensional spaces, due to its efficient graph-based structure.\n3. **Dynamic Indexing**: It supports dynamic updates, allowing for insertion and deletion of vectors without requiring a complete rebuild of the index.\n4. **Scalability**: HNSW can handle large datasets effectively, and its performance scales well with the number of vectors.\n\n#### Disadvantages:\n1. **Memory Usage**: HNSW can be memory-intensive because it stores multiple layers of graphs and additional metadata.\n2. **Index Construction Time**: Building an HNSW index can be slow, especially for very large datasets, due to the complexity of constructing the hierarchical graph structure.\n\n### IVF (Inverted File Index)\n\n#### Advantages:\n1. **Lower Memory Footprint**: IVF generally uses less memory compared to HNSW, as it relies on partitioning the data into clusters.\n2. **Faster Index Construction**: Building an IVF index is typically faster than HNSW, making it suitable for scenarios where index rebuilds are frequent.\n3. **Good for Large Datasets**: IVF is effective for very large datasets due to its partitioning approach, which reduces the search space for queries.\n\n#### Disadvantages:\n1. **Lower Recall**: IVF may have lower recall compared to HNSW, especially if the number of partitions (clusters) is not adequately tuned.\n2. **Tuning Complexity**: IVF requires careful tuning of parameters like the number of clusters and the number of probes to balance performance and accuracy.\n3. **Batch Updates**: While IVF can support updates, it is less efficient than HNSW for dynamic updates. Typically, updates involve batch processing or periodic re-indexing.\n\n### Tradeoffs in a RAG System\n\n1. **Accuracy vs. Efficiency**:",
+      "call_id": "6f41d439",
+      "response": "When designing a production Retrieval-Augmented Generation (RAG) system, choosing the appropriate vector index is crucial for achieving both performance and accuracy. Hierarchical Navigable Small World (HNSW) and Inverted File (IVF) indexing are two popular methods for approximate nearest neighbor search. Each has its own tradeoffs in terms of speed, memory usage, and accuracy. Here's an overview of the tradeoffs between HNSW and IVF:\n\n### HNSW (Hierarchical Navigable Small World)\n\n**Advantages:**\n1. **High Recall and Precision:** HNSW typically provides high recall and precision due to its graph-based nature, which allows for more accurate neighbor searching.\n2. **Fast Query Speed:** Once built, HNSW offers fast query times, often outperforming other methods in terms of latency for high recall requirements.\n3. **Dynamic Updates:** HNSW supports dynamic updates, allowing for insertion and deletion of vectors without needing to rebuild the entire index.\n\n**Disadvantages:**\n1. **High Memory Usage:** HNSW can be memory-intensive because it maintains several layers of graph structures and stores multiple graph nodes for each data point.\n2. **Complexity in Tuning:** The parameters for HNSW, such as the number of layers and the maximum number of connections, require careful tuning to balance performance and resource usage.\n3. **Construction Time:** Building the index can be slower compared to other methods, especially for very large datasets.\n\n### IVF (Inverted File)\n\n**Advantages:**\n1. **Lower Memory Footprint:** IVF tends to use less memory than HNSW, as it relies on partitioning the dataset into clusters and only indexes centroid vectors.\n2. **Scalable to Large Datasets:** IVF is often more scalable for extremely large datasets due to its partitioning approach, which can be combined with quantization techniques to further reduce memory usage.\n3. **Faster Index Construction:** Building an IVF index can be faster, especially if the dataset is large, because it simplifies the search space by clustering.\n\n**Disadvantages:**\n1. **Lower Recall at High Speeds:** IVF may achieve lower recall rates compared to HNSW, especially when configured for very fast query times.\n2. **Complexity with Quantization:** While IVF can be combined with quantization (e.g., Product Quantization) for improved efficiency, this adds complexity and can degrade precision if not properly configured.\n3. **Static Nature:** While IVF can",
       "source": "llm",
       "model_used": "gpt-4o",
       "complexity": "complex",
@@ -75,20 +75,20 @@
       "prompt_tokens": 35,
       "completion_tokens": 500,
       "cost_usd": 0.0050875,
-      "latency_ms": 6412,
+      "latency_ms": 7235,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 0.0052024,
-        "remaining_usd": 0.0447976,
-        "utilisation_pct": 10.4048,
+        "spent_usd": 0.0051934,
+        "remaining_usd": 0.0448066,
+        "utilisation_pct": 10.3868,
         "call_count": 4,
         "opened_at": null
       }
     },
     {
-      "call_id": "c1b1a375",
-      "response": "Reciprocal Rank Fusion (RRF) is a method for combining multiple ranked lists of results, such as search engine results. It assigns a score to each document based on its rank in each list, with higher-ranked documents receiving higher scores. Here's a Python function that implements RRF for two ranked lists:\n\n```python\ndef reciprocal_rank_fusion(ranked_list1, ranked_list2, k=60):\n    \"\"\"\n    Implement Reciprocal Rank Fusion (RRF) for two ranked lists.\n    \n    Parameters:\n    - ranked_list1: List of document IDs in the first ranking order.\n    - ranked_list2: List of document IDs in the second ranking order.\n    - k: Constant to control the steepness of the score decay (default is 60).\n    \n    Returns:\n    - A dictionary where keys are document IDs and values are their fused scores.\n    \"\"\"\n    # Initialize a dictionary to store RRF scores for each document\n    scores = {}\n    \n    # Process the first ranked list\n    for rank, doc_id in enumerate(ranked_list1):\n        if doc_id not in scores:\n            scores[doc_id] = 0\n        # Add the RRF contribution for this document\n        scores[doc_id] += 1 / (k + rank + 1)\n    \n    # Process the second ranked list\n    for rank, doc_id in enumerate(ranked_list2):\n        if doc_id not in scores:\n            scores[doc_id] = 0\n        # Add the RRF contribution for this document\n        scores[doc_id] += 1 / (k + rank + 1)\n    \n    return scores\n\n# Example usage:\nlist1 = [\"doc1\", \"doc2\", \"doc3\", \"doc4\"]\nlist2 = [\"doc3\", \"doc1\", \"doc5\", \"doc6\"]\n\nfused_scores = reciprocal_rank_fusion(list1, list2)\n\n# Sort documents by their fused scores in descending order\nsorted_docs = sorted(fused_scores.items(), key=lambda item: item[1], reverse=True)\n\nprint(\"Fused Rankings:\")\nfor doc_id, score in sorted_docs:\n    print(f\"{doc_id}: {score:.4f}\")\n```\n\n### Explanation:\n\n- **Parameters:**\n  - `ranked_list1` and `ranked_list2` are lists of document IDs ordered by their relevance (most relevant first).\n  - `k` is a",
+      "call_id": "7bc3abf9",
+      "response": "Reciprocal Rank Fusion (RRF) is a method used to combine multiple ranked lists into a single ranked list. The idea is to assign scores to items based on their ranks in the input lists, with a higher score given to items that appear near the top of any list. Here's a Python function that implements RRF for two ranked lists:\n\n```python\ndef reciprocal_rank_fusion(list1, list2, k=60):\n    \"\"\"\n    Implements Reciprocal Rank Fusion (RRF) for two ranked lists.\n    \n    Args:\n    - list1: A list of elements in ranked order (higher rank first).\n    - list2: A list of elements in ranked order (higher rank first).\n    - k: A constant that controls the influence of the rank. Default is 60.\n    \n    Returns:\n    - A list of elements ranked by their RRF score.\n    \"\"\"\n    from collections import defaultdict\n\n    # Initialize a dictionary to store the RRF scores for each element\n    scores = defaultdict(float)\n\n    # Calculate RRF scores for list1\n    for rank, element in enumerate(list1, start=1):\n        scores[element] += 1 / (k + rank)\n\n    # Calculate RRF scores for list2\n    for rank, element in enumerate(list2, start=1):\n        scores[element] += 1 / (k + rank)\n\n    # Sort elements by their RRF scores in descending order\n    fused_ranking = sorted(scores.items(), key=lambda x: x[1], reverse=True)\n\n    # Return only the elements in the sorted order\n    return [element for element, score in fused_ranking]\n\n# Example usage:\nlist1 = ['A', 'B', 'C', 'D']\nlist2 = ['B', 'C', 'A', 'E']\nfused_list = reciprocal_rank_fusion(list1, list2)\nprint(fused_list)\n```\n\n### Explanation:\n\n1. **Input Parameters**:\n   - `list1` and `list2`: These are the two ranked lists of elements. Elements at the beginning of the list have higher ranks.\n   - `k`: This is a constant that affects the influence of rank positions. A higher `k` reduces the influence of lower-ranked positions.\n\n2. **RRF Scoring**:\n   - For each element in the lists, the RRF score is calculated using the formula `1 / (k + rank)",
       "source": "llm",
       "model_used": "gpt-4o",
       "complexity": "complex",
@@ -96,13 +96,13 @@
       "prompt_tokens": 31,
       "completion_tokens": 500,
       "cost_usd": 0.0050775,
-      "latency_ms": 7816,
+      "latency_ms": 5724,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 0.010279900000000002,
-        "remaining_usd": 0.0397201,
-        "utilisation_pct": 20.559800000000003,
+        "spent_usd": 0.0102709,
+        "remaining_usd": 0.0397291,
+        "utilisation_pct": 20.5418,
         "call_count": 5,
         "opened_at": null
       }
@@ -110,17 +110,17 @@
   ],
   "scenario_3_cache_hits": [
     {
-      "call_id": "100a3839",
+      "call_id": "ed0bb6f2",
       "response": "The capital of France is Paris.",
       "source": "cache",
-      "similarity": 0.9999999999999999,
+      "similarity": 0.9999999999999998,
       "matched_query": "What is the capital of France?",
       "model_used": null,
       "cost_usd": 0.0,
-      "latency_ms": 416
+      "latency_ms": 341
     },
     {
-      "call_id": "a6fe3d71",
+      "call_id": "c857d586",
       "response": "The capital city of France is Paris.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
@@ -129,19 +129,19 @@
       "prompt_tokens": 23,
       "completion_tokens": 8,
       "cost_usd": 8.25e-06,
-      "latency_ms": 1173,
+      "latency_ms": 2080,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 0.010288150000000001,
-        "remaining_usd": 0.03971185,
-        "utilisation_pct": 20.5763,
+        "spent_usd": 0.010279149999999999,
+        "remaining_usd": 0.03972085,
+        "utilisation_pct": 20.558299999999996,
         "call_count": 6,
         "opened_at": null
       }
     },
     {
-      "call_id": "42e11321",
+      "call_id": "acffb5c2",
       "response": "The capital of France is Paris.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
@@ -150,13 +150,13 @@
       "prompt_tokens": 21,
       "completion_tokens": 7,
       "cost_usd": 7.349999999999999e-06,
-      "latency_ms": 1577,
+      "latency_ms": 1190,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.05,
-        "spent_usd": 0.0102955,
-        "remaining_usd": 0.039704500000000004,
-        "utilisation_pct": 20.591,
+        "spent_usd": 0.010286499999999999,
+        "remaining_usd": 0.039713500000000006,
+        "utilisation_pct": 20.572999999999997,
         "call_count": 7,
         "opened_at": null
       }
@@ -165,8 +165,8 @@
   "scenario_4_circuit_breaker": {
     "calls_before_trip": [
       {
-        "call_id": "5d8892d1",
-        "response": "Implementing distributed consensus algorithms like Raft is challenging for several reasons. These algorithms are designed to ensure that a group of nodes in a distributed system agree on a single value or course of action, even in the presence of failures. Achieving this requires careful handling of various complex issues:\n\n1. **Network Partitions and Failures**: Distributed systems are prone to network partitions and node failures. Consensus algorithms must ensure correctness and consistency even when some nodes cannot communicate or have crashed. Handling these scenarios requires designing mechanisms for timeouts, retries, and re-election of leaders.\n\n2. **Asynchronous Communication**: In distributed systems, there is no global clock, and messages can be delayed, reordered, or lost. Consensus algorithms like Raft must work correctly under these conditions, which adds complexity to their design and implementation.\n\n3. **Leader Election**: Raft uses a leader to manage the replication of log entries to other nodes. Implementing leader election correctly is challenging because it must handle scenarios where multiple nodes believe they are the leader, leading to potential conflicts.\n\n4. **Consistency and Fault Tolerance**: Raft ensures that all nodes eventually agree on the same log of operations, even if some nodes fail or messages are lost. This involves complex mechanisms for log replication, commit rules, and state machine transitions. The algorithm must ensure that once a decision is made, it is durable and can be recovered in case of failures.\n\n5. **Concurrency and Timing Issues**: Raft implementations need to handle concurrent operations and timing issues effectively. This includes dealing with race conditions, ensuring atomic operations, and managing timeouts and retries without causing inconsistencies.\n\n6. **State Machine Replication**: The consensus algorithm must ensure that each node applies operations to its state machine in the same order. This requires careful handling of log entries, including appending, committing, and applying them consistently across nodes.\n\n7. **Understanding and Correctness**: The correctness of distributed consensus algorithms is non-trivial to reason about. Developers must thoroughly understand the algorithm's invariants and properties to implement it correctly. Small mistakes can lead to subtle bugs that are hard to detect and fix.\n\n8. **Performance and Scalability**: While ensuring correctness is paramount, implementations must also be efficient and scalable. This involves optimizing network communication, minimizing latency, and balancing load across nodes without compromising the algorithm's correctness.\n\n9. **Testing and Debugging**: Testing distributed consensus algorithms is particularly difficult due to the non-determin",
+        "call_id": "54c5d26a",
+        "response": "Implementing distributed consensus algorithms like Raft is challenging for several reasons, primarily due to the complexity of ensuring consistency, fault tolerance, and robustness in a distributed system. Here are some key challenges:\n\n1. **Asynchronous Networks**: Distributed systems often operate over networks where message delays, reordering, and losses can occur. Raft must handle these issues gracefully, ensuring that the consensus process remains accurate and efficient even when messages arrive out of order or are delayed.\n\n2. **Partial Failures**: Nodes in a distributed system can fail independently. Raft must ensure that the system can continue to make progress and reach consensus even if some nodes are down, temporarily unreachable, or have crashed. This requires robust leader election and log replication mechanisms.\n\n3. **Concurrency and Timing Issues**: Raft operates in an environment where multiple nodes are concurrently trying to perform tasks such as leader election, log replication, and client request handling. Managing these concurrent operations without introducing race conditions or deadlocks is challenging.\n\n4. **Leader Election**: Ensuring a safe and timely leader election process is crucial. The algorithm must quickly detect leader failures and elect a new leader while ensuring that there are no split-brain scenarios where multiple leaders are elected simultaneously.\n\n5. **Log Consistency**: Achieving consensus requires that the log of commands across nodes remain consistent. Raft must handle cases where nodes have divergent logs due to network partitions or node failures and ensure that logs converge correctly once the failures are resolved.\n\n6. **State Machine Replication**: Raft needs to ensure that state machines on different nodes apply the same sequence of commands. This requires careful coordination to ensure that commands are committed in the correct order and that all nodes apply them consistently.\n\n7. **Safety and Liveness Guarantees**: Raft must guarantee safety (no two nodes can decide on different values for the same log index) and liveness (the system can continue to make progress and eventually reach a consensus). Balancing these guarantees, especially under network partitions or high failure rates, adds complexity.\n\n8. **Subtle Bugs and Edge Cases**: The complexity of the protocol can lead to subtle bugs, especially in handling edge cases such as network partitions, simultaneous node failures, or leader changes. Ensuring correctness in all possible scenarios is difficult.\n\n9. **Performance Optimization**: While ensuring correctness, Raft implementations must also be efficient. This involves optimizing network communication, minimizing latency, and efficiently managing leader elections and log replication.\n\n",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -174,20 +174,20 @@
         "prompt_tokens": 34,
         "completion_tokens": 500,
         "cost_usd": 0.005085,
-        "latency_ms": 7213,
+        "latency_ms": 7687,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.015380500000000002,
-          "remaining_usd": 0.0346195,
-          "utilisation_pct": 30.761,
+          "spent_usd": 0.0153715,
+          "remaining_usd": 0.034628500000000006,
+          "utilisation_pct": 30.743,
           "call_count": 8,
           "opened_at": null
         }
       },
       {
-        "call_id": "197d21f4",
-        "response": "When considering databases for a high-write analytics workload, it's important to understand the distinct characteristics and trade-offs between SQL and NoSQL databases. Both have their strengths and weaknesses, which can significantly impact performance, scalability, and overall suitability for your specific use case.\n\n### SQL Databases\n\n**Characteristics:**\n- **Structured Data Model**: SQL databases use a structured schema with tables, rows, and columns. The schema is predefined, which ensures data integrity and consistency.\n- **ACID Transactions**: They adhere to ACID (Atomicity, Consistency, Isolation, Durability) properties, making them suitable for applications where data integrity is crucial.\n- **Relational Model**: SQL databases are designed to handle complex queries and relationships between different entities through joins and foreign keys.\n- **SQL Query Language**: They use SQL (Structured Query Language) for defining and manipulating data, which is powerful and widely adopted.\n\n**Advantages:**\n- **Data Integrity and Consistency**: The strong consistency model ensures that all transactions are processed reliably.\n- **Complex Query Support**: SQL databases excel at complex queries and aggregations, which can be crucial for analytics.\n- **Mature Tools and Ecosystem**: A long history and wide adoption mean a robust set of tools and community support.\n\n**Disadvantages:**\n- **Scalability**: Vertical scaling (adding more power to a single server) is typically required, which can be a limitation for very high-write workloads.\n- **Rigid Schema**: The fixed schema can be inflexible, making changes to data structures more difficult and time-consuming.\n- **Performance Bottlenecks**: High-write workloads might suffer from performance bottlenecks due to locking and transaction management.\n\n**Examples**: PostgreSQL, MySQL, Oracle Database, Microsoft SQL Server.\n\n### NoSQL Databases\n\n**Characteristics:**\n- **Flexible Schema**: NoSQL databases offer a flexible schema design, which can support unstructured or semi-structured data.\n- **Horizontal Scalability**: Designed to scale out by distributing data across multiple nodes, which makes them suitable for high-write workloads.\n- **Variety of Data Models**: NoSQL databases come in various types, such as document stores, key-value stores, column-family stores, and graph databases.\n- **Eventual Consistency**: Many NoSQL databases favor eventual consistency over strong consistency, which can enhance write performance.\n\n**Advantages:**\n- **Scalability**: Easily scale horizontally",
+        "call_id": "f228655d",
+        "response": "When considering databases for a high-write analytics workload, it's important to compare and contrast SQL and NoSQL databases across several dimensions. Each type offers distinct advantages and disadvantages for different use cases.\n\n### SQL Databases\n\n**Characteristics:**\n- **Structured Schema:** SQL databases have a predefined schema, which makes them suitable for structured data and complex queries. This structured nature can be a limitation when dealing with rapidly changing or unstructured data.\n- **ACID Compliance:** SQL databases are typically ACID (Atomicity, Consistency, Isolation, Durability) compliant, ensuring data integrity even in the case of failures.\n- **Joins and Complex Queries:** They excel at complex queries and operations involving multiple tables, thanks to their robust support for joins and aggregations.\n\n**Pros for High-Write Workloads:**\n- **Data Integrity:** ACID compliance ensures that even with high write loads, the data remains consistent and reliable.\n- **Mature Ecosystem:** SQL databases have a mature ecosystem with well-understood tools for backup, recovery, and tuning.\n- **Strong Consistency:** They provide strong consistency guarantees, which can be crucial for certain analytics tasks requiring accurate and immediate data reflection.\n\n**Cons for High-Write Workloads:**\n- **Scalability:** Traditional SQL databases can struggle with horizontal scaling, which can be a bottleneck for high-write workloads. Although modern SQL databases like NewSQL or distributed SQL systems address this, they may not match the horizontal scaling capabilities of some NoSQL systems.\n- **Schema Rigidity:** The need to define a schema beforehand can slow down development and adaptations to rapidly changing data structures.\n\n### NoSQL Databases\n\n**Characteristics:**\n- **Schema Flexibility:** NoSQL databases allow flexible schema design, which can adapt quickly to changing data models without requiring extensive schema migrations.\n- **Horizontal Scalability:** They are designed to scale out by adding more servers, making them highly suitable for workloads that require handling large volumes of writes.\n- **Diverse Models:** NoSQL encompasses various types, such as key-value stores, document stores, column-family stores, and graph databases, each optimized for different use cases.\n\n**Pros for High-Write Workloads:**\n- **Scalability:** NoSQL databases are typically built to scale horizontally, making them ideal for handling massive write volumes and large datasets distributed across many nodes.\n- **Performance:** Many NoSQL systems are designed for high throughput and lower latency, often sacrificing some consistency for performance (eventual",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -195,20 +195,20 @@
         "prompt_tokens": 35,
         "completion_tokens": 500,
         "cost_usd": 0.0050875,
-        "latency_ms": 7621,
+        "latency_ms": 5482,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.020468,
-          "remaining_usd": 0.029532000000000003,
-          "utilisation_pct": 40.936,
+          "spent_usd": 0.020458999999999998,
+          "remaining_usd": 0.029541000000000005,
+          "utilisation_pct": 40.91799999999999,
           "call_count": 9,
           "opened_at": null
         }
       },
       {
-        "call_id": "460f51aa",
-        "response": "Certainly! Both microservices and monolithic architectures have their own advantages and disadvantages. Let's analyze them step by step:\n\n### Monolithic Architecture\n\n**Pros:**\n\n1. **Simplicity:**\n   - **Development:** Easier to develop initially since all components are part of a single codebase.\n   - **Deployment:** Only one deployment unit, making it simpler to manage and deploy.\n\n2. **Performance:**\n   - **Efficiency:** Direct method calls within the same process are faster than inter-process communication.\n   - **Resource Usage:** Often requires less overhead, as everything runs in a single process.\n\n3. **Testing:**\n   - **End-to-End Testing:** Easier to perform as you can test the whole application in a single environment.\n\n4. **Integrated Development:**\n   - **Tooling and Frameworks:** Easier to use certain development tools and frameworks that expect a single codebase.\n\n**Cons:**\n\n1. **Scalability:**\n   - **Limited Scalability:** Difficult to scale parts of the application independently, as the whole application must be scaled.\n   - **Resource Utilization:** Inefficient use of resources as all parts scale together.\n\n2. **Complexity Over Time:**\n   - **Codebase Growth:** As the application grows, the codebase can become large and unwieldy.\n   - **Tight Coupling:** Components can become tightly coupled, making changes and updates risky.\n\n3. **Deployment Challenges:**\n   - **Downtime:** Changes require redeploying the entire application, leading to potential downtime.\n   - **Update Frequency:** Slows down the release cycle due to the need for extensive testing before each deployment.\n\n4. **Technology Lock-in:**\n   - **Limited Flexibility:** Harder to adopt new technologies or languages for specific parts of the application.\n\n### Microservices Architecture\n\n**Pros:**\n\n1. **Scalability:**\n   - **Independent Scaling:** Each service can be scaled independently based on its needs.\n   - **Efficient Resource Utilization:** Better resource allocation as you can scale only the necessary components.\n\n2. **Flexibility and Resilience:**\n   - **Technology Diversity:** Different services can use different technologies and languages.\n   - **Fault Isolation:** Failure in one service does not directly affect others, enhancing resilience.\n\n3. **Development Speed:**\n   - **Parallel Development:** Teams can work on different services simultaneously, speeding up development.\n   - **Continuous Deployment",
+        "call_id": "177ccdca",
+        "response": "Certainly! Let's analyze the pros and cons of microservices versus a monolithic architecture step by step:\n\n### Monolithic Architecture\n\n**Pros:**\n\n1. **Simplicity:**\n   - **Development and Deployment:** Initially, a monolithic architecture can be simpler to develop and deploy because all components are built as a single unit.\n   - **Testing:** Testing is straightforward because you are dealing with a single application.\n\n2. **Performance:**\n   - **Efficient Communication:** Internal method calls within a monolithic application are typically faster than network calls between microservices.\n\n3. **Consistency:**\n   - **Data Management:** It\u2019s easier to maintain data consistency within a monolithic application since it often shares a single database.\n\n4. **Tooling and Infrastructure:**\n   - **Mature Ecosystem:** Many tools and frameworks are designed with monolithic applications in mind, providing robust support.\n\n**Cons:**\n\n1. **Scalability:**\n   - **Limited Flexibility:** Scaling a monolithic application means scaling the entire application, even if only one part of it experiences high load.\n\n2. **Development Bottlenecks:**\n   - **Coupled Components:** Changes in one part of the system can affect the entire application, making continuous deployment challenging.\n\n3. **Technology Stack:**\n   - **Inflexibility:** You are often constrained to a single technology stack throughout the application.\n\n4. **Large Codebase:**\n   - **Complexity:** As the application grows, it can become unwieldy and difficult to manage.\n\n### Microservices Architecture\n\n**Pros:**\n\n1. **Scalability:**\n   - **Granular Scaling:** You can scale individual microservices independently depending on their load and performance requirements.\n\n2. **Flexibility in Technology:**\n   - **Polyglot Programming:** Different services can use different technologies, allowing you to choose the best tool for each job.\n\n3. **Development Speed:**\n   - **Independent Teams:** Teams can work on different services independently, improving development speed and agility.\n\n4. **Resilience:**\n   - **Fault Isolation:** A failure in one microservice is less likely to affect the entire system.\n\n5. **Continuous Deployment:**\n   - **Frequent Releases:** Teams can deploy changes to individual services without affecting the entire system.\n\n**Cons:**\n\n1. **Complexity:**\n   - **Distributed Systems:** Managing a system of interconnected microservices is inherently more complex than a mon",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -216,20 +216,20 @@
         "prompt_tokens": 34,
         "completion_tokens": 500,
         "cost_usd": 0.005085,
-        "latency_ms": 9888,
+        "latency_ms": 6108,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.025553,
-          "remaining_usd": 0.024447000000000003,
-          "utilisation_pct": 51.105999999999995,
+          "spent_usd": 0.025543999999999997,
+          "remaining_usd": 0.024456000000000006,
+          "utilisation_pct": 51.08799999999999,
           "call_count": 10,
           "opened_at": null
         }
       },
       {
-        "call_id": "1f089bff",
-        "response": "Migrating from a monolithic architecture to microservices is a complex process that requires careful planning and execution. Below, I outline a migration plan along with the tradeoffs involved in such a transformation.\n\n### Migration Plan\n\n1. **Assessment and Planning**\n   - **Understand the Current System:** Document the existing monolithic architecture, including all its components, dependencies, and data flows.\n   - **Identify Business Domains:** Break down the monolith into logical business domains or bounded contexts, which can guide the decomposition into microservices.\n   - **Set Goals and Priorities:** Define the business objectives for the migration (e.g., scalability, faster development cycles, technology flexibility) and prioritize services to be extracted based on business value and technical feasibility.\n   - **Risk Assessment:** Identify potential risks and challenges, such as data consistency issues, and plan for mitigation.\n\n2. **Architecture and Design**\n   - **Define Service Boundaries:** Design microservices around identified business domains, ensuring they are loosely coupled and independently deployable.\n   - **Technology Stack Selection:** Decide on the technology stack for microservices (considering factors like language, frameworks, databases, and communication protocols).\n   - **Data Management Strategy:** Plan for managing data distribution across services, including strategies for dealing with shared data, database decomposition, and eventual consistency.\n\n3. **Infrastructure Preparation**\n   - **Build DevOps Capabilities:** Establish CI/CD pipelines, containerization (e.g., Docker), orchestration tools (e.g., Kubernetes), and monitoring/logging infrastructure.\n   - **Develop a Service Discovery Mechanism:** Implement service discovery to enable dynamic location and communication between services.\n\n4. **Incremental Migration**\n   - **Strangle the Monolith:** Use the strangler pattern to incrementally extract functionality from the monolith to new microservices. Redirect specific functionalities or endpoints from the monolith to the new services.\n   - **Start with Non-Critical Services:** Begin migration with services that have lower business impact to minimize risk.\n   - **Implement API Gateway:** Use an API gateway to manage requests from clients and route them to the appropriate microservices or monolith parts.\n   - **Data Synchronization:** Implement solutions for data consistency between the monolith and microservices during the transition period.\n\n5. **Testing and Validation**\n   - **Comprehensive Testing:** Perform unit, integration, and end-to-end testing throughout the migration process to ensure that services are functioning correctly.\n   - **Performance and Load Testing:** Test the",
+        "call_id": "862b26c9",
+        "response": "Migrating from a monolithic architecture to microservices is a significant undertaking that can offer numerous benefits, such as improved scalability, flexibility, and resilience. However, it also introduces complexity and requires careful planning. Below is a comprehensive migration plan, along with a discussion of tradeoffs and considerations.\n\n### Migration Plan\n\n1. **Assessment and Planning**\n   - **Understand the Current System**: Conduct a thorough analysis of the existing monolithic application. Identify the modules, their dependencies, and how they interact.\n   - **Identify Boundaries**: Use techniques such as Domain-Driven Design (DDD) to define bounded contexts. Identify logical units that can be converted into microservices.\n   - **Set Goals and Priorities**: Define what you aim to achieve with the migration (e.g., scalability, faster deployment cycles). Prioritize which services to extract first based on business value, complexity, and risk.\n\n2. **Design the Microservices Architecture**\n   - **Define Service Boundaries**: Clearly define the boundaries and responsibilities of each microservice.\n   - **Select Communication Protocols**: Decide on synchronous (e.g., REST, gRPC) and asynchronous (e.g., message queues, Kafka) communication methods between services.\n   - **Data Management Strategy**: Decide whether to use a shared database or individual databases for each service. Plan how to handle data consistency and transactions.\n\n3. **Build Infrastructure and DevOps Pipeline**\n   - **Set Up Continuous Integration/Continuous Deployment (CI/CD)**: Establish a robust CI/CD pipeline to automate testing and deployment of microservices.\n   - **Containerization and Orchestration**: Use tools like Docker for containerization and Kubernetes for orchestration to manage microservices at scale.\n   - **Monitoring and Logging**: Implement centralized logging and monitoring solutions to gain visibility into the performance and health of services.\n\n4. **Incremental Migration**\n   - **Strangler Pattern**: Gradually replace parts of the monolith with microservices. Start with less critical services to minimize risk.\n   - **APIs and Gateways**: Use an API gateway to route traffic between the monolith and new microservices. This abstraction helps in managing requests and applying security policies consistently.\n   - **Data Migration**: Carefully plan data migration for each service. Consider dual-write strategies or change-data-capture (CDC) mechanisms to keep data consistent.\n\n5. **Testing and Validation**\n   - **Automated Testing**: Create extensive automated tests",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -237,20 +237,20 @@
         "prompt_tokens": 35,
         "completion_tokens": 500,
         "cost_usd": 0.0050875,
-        "latency_ms": 7291,
+        "latency_ms": 6273,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.0306405,
-          "remaining_usd": 0.0193595,
-          "utilisation_pct": 61.281,
+          "spent_usd": 0.0306315,
+          "remaining_usd": 0.019368500000000004,
+          "utilisation_pct": 61.26299999999999,
           "call_count": 11,
           "opened_at": null
         }
       },
       {
-        "call_id": "9fe320ff",
-        "response": "In distributed systems, consistency models define the expected behavior of data after writes and before reads. Two prominent models are strong consistency and eventual consistency, each with its own tradeoffs. Understanding these tradeoffs is crucial for system architects to select the appropriate model for their specific use case.\n\n### Strong Consistency\n\n**Definition:** \nStrong consistency ensures that all nodes see the same data at the same time. After a write is completed, all subsequent reads will return the most recent write value.\n\n**Advantages:**\n\n1. **Simplicity for Developers:**\n   - Developers can write applications without worrying about stale data because every read reflects the latest write.\n\n2. **Predictability:**\n   - Users have a consistent view of data, which is critical for applications like financial systems where operations must reflect the most recent transactions.\n\n3. **Ease of Debugging:**\n   - Debugging is simplified because there are no anomalies caused by reading outdated data.\n\n4. **Data Integrity:**\n   - Ensures high data integrity and correctness, which is important for applications where consistency is more critical than availability.\n\n**Disadvantages:**\n\n1. **Latency:**\n   - Achieving strong consistency often requires coordination across distributed nodes, which can result in higher read and write latencies.\n\n2. **Scalability:**\n   - It can be challenging to scale systems that require strong consistency, as the overhead of maintaining consistency increases with the number of nodes.\n\n3. **Availability:**\n   - In the presence of network partitions, systems that enforce strong consistency must sacrifice availability (as per the CAP theorem).\n\n4. **Complexity:**\n   - Implementing strong consistency can introduce complexity in terms of consensus protocols and coordination mechanisms.\n\n### Eventual Consistency\n\n**Definition:**\nEventual consistency is a weaker consistency model where the system guarantees that, if no new updates are made, eventually all reads will return the last updated value. However, there may be a period during which reads may return stale data.\n\n**Advantages:**\n\n1. **High Availability:**\n   - Eventual consistency allows for high availability, even during network partitions, as nodes can operate independently and later reconcile differences.\n\n2. **Low Latency:**\n   - Read and write operations can be completed quickly, as they do not require coordinated consensus across nodes.\n\n3. **Scalability:**\n   - Systems can easily scale horizontally, since nodes can process requests independently and converge over time.\n\n4. **Fault Tolerance:**\n",
+        "call_id": "712a5419",
+        "response": "In distributed systems, consistency models define how data is viewed and updated across different nodes. Two common consistency models are strong consistency and eventual consistency. Each has its tradeoffs, and the choice between them often depends on the specific requirements and constraints of the system being designed.\n\n### Strong Consistency\n\n#### Definition:\nStrong consistency ensures that every read operation reflects the most recent write operation. This means that once a write is acknowledged, all subsequent reads will return that value or a more recent one.\n\n#### Tradeoffs:\n\n1. **Pros:**\n   - **Predictability:** Clients always see the most recent data, which simplifies application logic since developers don\u2019t have to account for stale reads.\n   - **Simplified debugging:** With strong consistency, issues related to data consistency are minimized, making it easier to debug applications.\n   - **Simplified reasoning:** Easier to reason about the state of the system, as it behaves as if there is a single, up-to-date copy of the data.\n\n2. **Cons:**\n   - **Performance and Latency:** Achieving strong consistency often requires synchronization across nodes, which can result in higher latencies. Systems may block reads or writes until data is fully synchronized.\n   - **Availability:** According to the CAP theorem, a system cannot simultaneously provide consistency, availability, and partition tolerance. In the presence of network partitions, a strongly consistent system might sacrifice availability.\n   - **Scalability:** Systems designed for strong consistency can face challenges in scaling, particularly in geographically distributed settings, due to the need for coordination.\n\n### Eventual Consistency\n\n#### Definition:\nEventual consistency guarantees that, if no new updates are made to a given piece of data, all accesses will eventually return the last updated value. It allows for temporary inconsistencies, with the expectation that the system will resolve to a consistent state over time.\n\n#### Tradeoffs:\n\n1. **Pros:**\n   - **Availability and Partition Tolerance:** Eventual consistency models allow systems to remain available even in the presence of network partitions, as nodes can continue to operate independently.\n   - **Performance and Latency:** Reads and writes can be processed locally without waiting for coordination, resulting in lower latencies and higher throughput.\n   - **Scalability:** Eventual consistency systems can scale more easily across distributed networks, accommodating geographically dispersed data centers.\n\n2. **Cons:**\n   - **Complexity in Application Logic:** Developers must handle the potential for stale reads and resolve conflicts, which can complic",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -258,20 +258,20 @@
         "prompt_tokens": 33,
         "completion_tokens": 500,
         "cost_usd": 0.0050825,
-        "latency_ms": 6779,
+        "latency_ms": 5969,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.035723000000000005,
-          "remaining_usd": 0.014276999999999998,
-          "utilisation_pct": 71.44600000000001,
+          "spent_usd": 0.035713999999999996,
+          "remaining_usd": 0.014286000000000007,
+          "utilisation_pct": 71.428,
           "call_count": 12,
           "opened_at": null
         }
       },
       {
-        "call_id": "7e8ff265",
-        "response": "Implementing distributed consensus algorithms like Raft is challenging due to several factors that stem from the complexities of distributed systems. Here\u2019s a detailed exploration of these challenges:\n\n1. **Asynchronous Communication**: \n   - Networks are inherently unreliable and have variable latencies. Messages can be delayed, lost, or delivered out of order, making it difficult to ensure all nodes have a consistent view of the system state.\n\n2. **Partial Failures**: \n   - In distributed systems, nodes can fail independently. These failures can be transient (temporary) or permanent, and nodes can recover or reboot, leading to different states across the system.\n\n3. **Leader Election**:\n   - Raft requires a leader to manage log replication and client interactions. Electing a leader in the presence of network partitions or node failures is difficult. Algorithms must ensure that only one leader is elected at a time to maintain consistency.\n\n4. **Log Replication**:\n   - Ensuring that logs are replicated consistently across nodes is challenging. Nodes can be at different stages of log replication (e.g., some might have committed entries that others haven\u2019t seen yet), and handling these discrepancies is complex.\n\n5. **State Machine Consistency**:\n   - The consensus algorithm must ensure that the replicated state machine executes commands in the same order across all nodes. This requirement is complicated by the need to handle concurrent operations and failures.\n\n6. **Handling Network Partitions**:\n   - Network partitions can cause groups of nodes to become isolated. The algorithm must ensure that consensus is maintained and that split-brain scenarios (where two leaders are elected in different partitions) do not occur.\n\n7. **Atomicity and Durability**:\n   - Consensus algorithms need to guarantee that once a decision is made (e.g., a log entry is committed), it is not lost, even in the presence of failures. This requires careful management of persistent storage and recovery mechanisms.\n\n8. **Concurrency and Asynchronous Execution**:\n   - Distributed systems often run concurrent processes that can interfere with one another. Proper synchronization is necessary to avoid race conditions and ensure correct state transitions.\n\n9. **Complexity of Correctness Proofs**:\n   - Proving the correctness of consensus algorithms is non-trivial. Formal verification or rigorous testing is needed to ensure that the algorithm behaves correctly in all possible scenarios, which is challenging given the vast number of potential failure modes.\n\n10. **Performance and Scalability**:\n    - Achieving consensus efficiently is crucial",
+        "call_id": "12b2464c",
+        "response": "Distributed consensus algorithms, such as Raft, are challenging to implement correctly due to several inherent complexities and challenges that arise in distributed systems. Here are the key reasons:\n\n1. **Asynchronous Communication**: Distributed systems often operate over networks that are inherently asynchronous. This means that messages can be delayed, lost, or arrive out of order, which complicates the design of algorithms that require nodes to reach agreement.\n\n2. **Fault Tolerance**: Consensus algorithms must handle various types of failures, including node crashes and network partitions, while still ensuring that the system can make progress. Implementing fault tolerance correctly is a complex task, as the algorithm must distinguish between slow nodes and failed nodes, and ensure that the system can recover and continue to operate correctly.\n\n3. **Leader Election**: A central component of Raft and similar algorithms is leader election. This process must be reliable and efficient, and it must handle the case where multiple nodes believe they are the leader (split-brain scenario) due to network partitions or delayed messages.\n\n4. **Log Replication**: In Raft, the leader must replicate log entries to followers, and this process must be done in a way that ensures consistency across all nodes. Handling discrepancies in logs, such as missing or conflicting entries, adds to the complexity.\n\n5. **Consistency Guarantees**: Raft must ensure that once a decision is made, it is replicated consistently across all nodes. This involves complex mechanisms to ensure that updates are applied in the same order everywhere, despite failures and network issues.\n\n6. **Concurrency and Timing Issues**: Implementing distributed consensus involves dealing with concurrency issues that arise from the independent operation of nodes. Timing assumptions, such as timeouts for leader election and heartbeat intervals, must be carefully chosen to balance responsiveness and stability.\n\n7. **State Management**: Nodes in a distributed consensus algorithm maintain state about the system (e.g., current term, votedFor, log entries). Managing this state correctly, ensuring it is updated atomically, and persisting it across failures is non-trivial.\n\n8. **Correctness and Liveness**: Ensuring both safety (consistency of decisions) and liveness (ability to continue making progress) under all conditions is challenging. The algorithm must be carefully designed to avoid deadlock, livelock, or other pathological states.\n\n9. **Complex Scenarios and Edge Cases**: Real-world distributed systems face numerous edge cases, such as network partitions, simultaneous node failures,",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -279,20 +279,20 @@
         "prompt_tokens": 34,
         "completion_tokens": 500,
         "cost_usd": 0.005085,
-        "latency_ms": 10692,
+        "latency_ms": 8764,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.040808000000000004,
-          "remaining_usd": 0.009191999999999999,
-          "utilisation_pct": 81.616,
+          "spent_usd": 0.040798999999999995,
+          "remaining_usd": 0.009201000000000008,
+          "utilisation_pct": 81.59799999999998,
           "call_count": 13,
           "opened_at": null
         }
       },
       {
-        "call_id": "7967f2f5",
-        "response": "When evaluating SQL and NoSQL databases for a high-write analytics workload, it's important to consider several factors such as data model flexibility, scalability, performance, consistency, and tooling. Here's a comprehensive comparison:\n\n### Data Model Flexibility:\n- **SQL Databases:**\n  - **Structure:** SQL databases use a structured schema-based approach, which can be restrictive for rapidly changing data models. The data is organized into tables with predefined columns and data types.\n  - **Use Case Fit:** This rigidity can be a drawback for applications where the data model needs to evolve quickly.\n\n- **NoSQL Databases:**\n  - **Structure:** NoSQL databases offer various models such as document, key-value, column-family, and graph, providing greater flexibility.\n  - **Use Case Fit:** They are ideal when the data model is dynamic or unstructured, allowing for easier adaptation to changes.\n\n### Scalability:\n- **SQL Databases:**\n  - **Vertical Scalability:** Traditionally, SQL databases scale vertically by adding more resources to a single server.\n  - **Horizontal Scalability:** While some modern SQL databases (e.g., distributed SQL databases like CockroachDB) offer horizontal scaling, it can be complex to manage.\n\n- **NoSQL Databases:**\n  - **Horizontal Scalability:** Designed from the ground up for horizontal scalability across distributed architectures, making them well-suited for high-write workloads.\n  - **Use Case Fit:** They can handle large volumes of data and high-velocity transactions across multiple nodes efficiently.\n\n### Performance:\n- **SQL Databases:**\n  - **Transaction Handling:** Strong ACID compliance ensures consistency but can introduce overhead, potentially affecting write performance.\n  - **Optimization:** Optimized for complex queries and joins, which might not be necessary for high-write scenarios.\n\n- **NoSQL Databases:**\n  - **Write Optimization:** Typically optimized for high write throughput and can handle concurrent write operations more efficiently due to eventual consistency models.\n  - **Latency:** Lower latency for writes in distributed setups, beneficial for real-time analytics.\n\n### Consistency:\n- **SQL Databases:**\n  - **ACID Transactions:** Ensure strong consistency and reliability, which is crucial for applications where data integrity is paramount.\n  - **Trade-offs:** This can lead to performance trade-offs in high-write environments due to locking and transaction management overhead.\n\n- **NoSQL Databases:**\n  - **Consistency Models:** Often favor eventual consistency, which can improve write performance but may",
+        "call_id": "683b4a46",
+        "response": "When considering databases for a high-write analytics workload, it\u2019s essential to understand the differences between SQL (relational) and NoSQL (non-relational) databases, as each has its strengths and weaknesses depending on the specific requirements of the workload. Here\u2019s a comprehensive comparison:\n\n### Data Model\n\n- **SQL Databases**:\n  - Use a structured schema with tables, rows, and columns.\n  - Suitable for structured data and complex queries.\n  - Schema must be defined up front, making it less flexible for changing data requirements.\n  \n- **NoSQL Databases**:\n  - Include various types like document stores, key-value stores, column-family stores, and graph databases.\n  - Handle unstructured and semi-structured data.\n  - More flexible schema, allowing for changes in data models without major disruptions.\n\n### Scalability\n\n- **SQL Databases**:\n  - Traditionally scale vertically by adding more powerful hardware.\n  - Some modern SQL databases support horizontal scaling (e.g., distributed SQL databases), but it can be complex to implement.\n\n- **NoSQL Databases**:\n  - Designed to scale horizontally across many servers.\n  - Ideally suited for handling large volumes of writes and data distribution across multiple nodes.\n\n### Write Performance\n\n- **SQL Databases**:\n  - Write operations can be slower due to the need for maintaining ACID (Atomicity, Consistency, Isolation, Durability) properties.\n  - Locks and transactions can introduce overhead, affecting write throughput.\n\n- **NoSQL Databases**:\n  - Often optimized for high-write performance, with some sacrificing consistency for availability and partition tolerance, following the CAP theorem.\n  - Use eventual consistency models, which can improve write throughput and latency.\n\n### Consistency and Transactions\n\n- **SQL Databases**:\n  - Strong ACID compliance ensures data consistency and integrity.\n  - Suitable for workloads requiring strict transactional integrity.\n\n- **NoSQL Databases**:\n  - Many NoSQL systems offer eventual consistency, prioritizing availability and partition tolerance.\n  - Some NoSQL databases provide configurable consistency levels, allowing a balance between consistency and performance.\n\n### Query Capabilities\n\n- **SQL Databases**:\n  - Powerful, expressive query language (SQL) for complex queries, joins, and aggregations.\n  - Ideal for analytical queries requiring complex data manipulation.\n\n- **NoSQL Databases**:\n  - Query capabilities vary depending on the type and design (e.g., document-based queries, key-based lookups",
         "source": "llm",
         "model_used": "gpt-4o",
         "complexity": "complex",
@@ -300,20 +300,20 @@
         "prompt_tokens": 35,
         "completion_tokens": 500,
         "cost_usd": 0.0050875,
-        "latency_ms": 8620,
+        "latency_ms": 5255,
         "breaker_status": {
           "state": "CLOSED",
           "budget_usd": 0.05,
-          "spent_usd": 0.045895500000000006,
-          "remaining_usd": 0.004104499999999997,
-          "utilisation_pct": 91.79100000000001,
+          "spent_usd": 0.0458865,
+          "remaining_usd": 0.004113500000000006,
+          "utilisation_pct": 91.773,
           "call_count": 14,
           "opened_at": null
         }
       }
     ],
     "tripped_at": {
-      "spent": 0.05094100000000001,
+      "spent": 0.050932,
       "limit": 0.05
     },
     "blocked_after_trip": true
@@ -322,11 +322,11 @@
     "status_before_reset": {
       "state": "OPEN",
       "budget_usd": 0.05,
-      "spent_usd": 0.045895500000000006,
-      "remaining_usd": 0.004104499999999997,
-      "utilisation_pct": 91.79100000000001,
+      "spent_usd": 0.0458865,
+      "remaining_usd": 0.004113500000000006,
+      "utilisation_pct": 91.773,
       "call_count": 14,
-      "opened_at": "2026-07-13T11:12:08.907099+00:00"
+      "opened_at": "2026-07-13T15:46:28.226931+00:00"
     },
     "status_after_reset": {
       "state": "CLOSED",
@@ -338,29 +338,29 @@
       "opened_at": null
     },
     "result_after_reset": {
-      "call_id": "71466d89",
-      "response": "Python is a high-level, interpreted programming language known for its simplicity and readability. Created by Guido van Rossum and first released in 1991, Python emphasizes code clarity and efficiency, making it an excellent choice for beginners and experienced developers alike.\n\nKey features of Python include:\n\n1. **Readable Syntax**: Python's syntax is designed to be easy to read and write, which helps programmers express concepts in fewer lines of code compared to other languages.\n\n2. **Interpreted Language**: Python code is executed line by line at runtime, which makes debugging easier and allows for rapid development.\n\n3. **Dynamic Typing**: Variables in Python do not require an explicit declaration to reserve memory space, and the type of a variable is determined at runtime.\n\n4. **Extensive Standard Library**: Python comes with a large standard library that supports many common programming tasks such as file I/O, system calls, and even web development.\n\n5. **Cross-Platform Compatibility**: Python can run on various operating systems, including Windows, macOS, and Linux, allowing for flexible development environments.\n\n6. **Community and Ecosystem**: Python has a large and active community, which contributes to a vast ecosystem of third-party libraries and frameworks. Popular libraries include NumPy and pandas for data science, Flask and Django for web development, TensorFlow and PyTorch for machine learning, and many others.\n\n7. **Versatile Use Cases**: Python is used in various domains, including web development, data analysis, artificial intelligence, scientific computing, automation, and more.\n\nOverall, Python's combination of simplicity, power, and versatility has made it one of the most popular programming languages in the world.",
+      "call_id": "59939ca1",
+      "response": "Python is a high-level, interpreted programming language known for its simplicity and readability. It was created by Guido van Rossum and first released in 1991. Python is designed to be easy to understand and use, making it a popular choice for beginners as well as experienced programmers.\n\nKey features of Python include:\n\n1. **Readability**: Python's syntax emphasizes code readability, which allows programmers to express concepts in fewer lines of code compared to other languages.\n\n2. **Dynamic Typing**: Python uses dynamic typing, meaning that you don't need to explicitly declare the data type of a variable when you create it.\n\n3. **Interpreted Language**: Python code is executed line by line, which makes it easier to test and debug.\n\n4. **Extensive Standard Library**: Python comes with a rich standard library that provides modules and functions for various tasks, from file handling to web development and data analysis.\n\n5. **Cross-Platform**: Python can run on various operating systems, including Windows, macOS, and Linux, without requiring modification.\n\n6. **Object-Oriented**: Python supports object-oriented programming (OOP) principles, allowing for the creation of classes and objects.\n\n7. **Large Community and Ecosystem**: Python has a large and active community, which contributes to a vast ecosystem of third-party libraries and frameworks, such as NumPy, Pandas, Flask, Django, and TensorFlow.\n\n8. **Versatile**: Python is used in various domains, including web development, data analysis, artificial intelligence, scientific computing, automation, and more.\n\nOverall, Python's combination of readability, powerful libraries, and community support makes it one of the most popular programming languages in the world.",
       "source": "llm",
       "model_used": "gpt-4o-mini",
       "complexity": "simple",
       "routing_confidence": 0.8999999999999999,
       "prompt_tokens": 21,
-      "completion_tokens": 341,
-      "cost_usd": 0.00020774999999999998,
-      "latency_ms": 6727,
+      "completion_tokens": 348,
+      "cost_usd": 0.00021194999999999997,
+      "latency_ms": 4329,
       "breaker_status": {
         "state": "CLOSED",
         "budget_usd": 0.1,
-        "spent_usd": 0.00020774999999999998,
-        "remaining_usd": 0.09979225,
-        "utilisation_pct": 0.20774999999999993,
+        "spent_usd": 0.00021194999999999997,
+        "remaining_usd": 0.09978805,
+        "utilisation_pct": 0.21194999999999994,
         "call_count": 1,
         "opened_at": null
       }
     }
   },
   "scenario_6_force_model": {
-    "call_id": "cf29b2e4",
+    "call_id": "12a157d5",
     "response": "2 + 2 equals 4.",
     "source": "llm",
     "model_used": "gpt-4o",
@@ -369,13 +369,13 @@
     "prompt_tokens": 24,
     "completion_tokens": 8,
     "cost_usd": 0.00014000000000000001,
-    "latency_ms": 768,
+    "latency_ms": 1078,
     "breaker_status": {
       "state": "CLOSED",
       "budget_usd": 0.1,
-      "spent_usd": 0.00034774999999999997,
-      "remaining_usd": 0.09965225000000001,
-      "utilisation_pct": 0.34774999999999995,
+      "spent_usd": 0.00035194999999999996,
+      "remaining_usd": 0.09964805,
+      "utilisation_pct": 0.35195,
       "call_count": 2,
       "opened_at": null
     }
@@ -384,7 +384,7 @@
     "cache_summary": {
       "hits": 1,
       "misses": 7,
-      "total_saved_usd": 0.0102955,
+      "total_saved_usd": 0.010286499999999999,
       "total_entries": 7,
       "threshold": 0.95,
       "hit_rate": 0.125
@@ -392,20 +392,20 @@
     "breaker_status": {
       "state": "CLOSED",
       "budget_usd": 0.1,
-      "spent_usd": 0.00034774999999999997,
-      "remaining_usd": 0.09965225000000001,
-      "utilisation_pct": 0.34774999999999995,
+      "spent_usd": 0.00035194999999999996,
+      "remaining_usd": 0.09964805,
+      "utilisation_pct": 0.35195,
       "call_count": 2,
       "opened_at": null
     },
     "cost_tracker_summary": {
       "total_calls": 16,
-      "total_cost_usd": 0.04624325000000001,
+      "total_cost_usd": 0.04623845,
       "total_prompt_tokens": 465,
-      "total_completion_tokens": 5038,
-      "avg_cost_per_call_usd": 0.0028902031250000004,
+      "total_completion_tokens": 5030,
+      "avg_cost_per_call_usd": 0.002889903125,
       "cost_by_model": {
-        "gpt-4o-mini": 0.00033824999999999995,
+        "gpt-4o-mini": 0.00033345,
         "gpt-4o": 0.045905
       },
       "calls_by_model": {
