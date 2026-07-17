@@ -15,7 +15,17 @@ from celery import Celery
 
 from config import settings
 
-celery_app = Celery("ingestion", broker=settings.redis_url, backend=settings.redis_url)
+celery_app = Celery(
+    "ingestion",
+    broker=settings.redis_url,
+    backend=settings.redis_url,
+    # WHAT: include= tells the worker process which modules to import at
+    #       startup, purely to trigger their @celery_app.task registration
+    # WHY: `celery -A worker.celery_app worker` only imports celery_app.py
+    #      itself — without this, ingest_document is never registered and
+    #      the worker's [tasks] list comes up empty
+    include=["worker.tasks"],
+)
 
 celery_app.conf.update(
     task_serializer="json",
