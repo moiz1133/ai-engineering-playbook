@@ -4,7 +4,9 @@ A standalone Python project implementing three production LLM infrastructure
 components — an embedding-based semantic cache, a budget-based cost circuit
 breaker, and a complexity-based model tier router — composed into a single
 middleware entry point, `llm_request()`. Pure Python + `openai` + `numpy`. No
-LangChain, no external cache store, no vector database.
+LangChain, no external cache store, no vector database. An `observability/`
+layer (Prometheus metrics + Langfuse tracing) sits on top, unmodified from
+`llm_request()` itself — see [Observability](#observability-prometheus--langfuse-tracing) below.
 
 ## Why these three components together
 
@@ -61,6 +63,11 @@ the router for a fine-tuned classifier — `middleware.py` doesn't change.
 | `logger.py` | Append-only structured JSONL event log |
 | `middleware.py` | Composes all of the above into `llm_request()` |
 | `run_demo.py` | End-to-end demo covering all six scenarios below |
+| `observability/prometheus_metrics.py` | Counter/Histogram/Gauge definitions on a custom `CollectorRegistry` |
+| `observability/langfuse_tracer.py` | Wraps the Langfuse v4 SDK; a no-op if `LANGFUSE_PUBLIC_KEY` isn't set |
+| `observability/middleware.py` | `observed_llm_request()` — thin wrapper around `llm_request()`, see below |
+| `metrics_server.py` | Standalone `/metrics` HTTP endpoint for Prometheus to scrape |
+| `run_observed_demo.py` | End-to-end demo of the observability layer, real numbers below |
 
 ## An optimization made across two commits: avoiding double embedding
 
@@ -87,6 +94,105 @@ race past a budget check between the read and the write, or corrupt list
 state during eviction/append. For threaded use, guard calls into these
 objects with a `threading.Lock()`; for asyncio, use `asyncio.Lock()`.
 `JSONLLogger` has the same caveat for concurrent file appends.
+
+## Observability: Prometheus + Langfuse tracing
+
+`observability/middleware.py` adds `observed_llm_request()` — a drop-in
+replacement for `llm_request()` with the same signature (plus an optional
+`session_id`) and the same return value, exposing Prometheus metrics and a
+Langfuse trace for every call. **It never modifies `llm_infra/`**; it's a
+separate package that imports the existing code and layers metrics/tracing
+around it.
+
+### Why it's a genuinely thin wrapper, not a re-implementation
+
+`observed_llm_request()` calls `llm_request()` **exactly once** and derives
+every metric and trace span from its return value (or from catching
+`BudgetExceededError`). It does not re-check the cache, re-run model routing,
+or re-check the circuit breaker itself.
+
+That design choice fixes a real bug rather than following the original spec
+literally. The first version of this wrapper called `cache.lookup()` itself
+to gather metrics, then delegated to `llm_request(..., skip_cache=True)`.
+Since `skip_cache` guards both the cache *lookup* and the cache *store*
+inside `llm_request()`, that would have silently broken caching for every
+observed call — repeat queries would never populate the cache, because
+nothing would ever get stored. Calling `llm_request()` once and reading
+`source`/`model_used`/`cost_usd`/etc. off its result avoids the bug entirely.
+**Verified for real**: in the actual run below, a repeated query hit the
+cache twice at similarity 0.999 — proof the fix works, not just a theory.
+
+### A second real gap: the Langfuse SDK moved on
+
+`pip install langfuse` today installs v4, a completely different
+OpenTelemetry-based API. The older `client.trace()` / `trace.span()` /
+`trace.generation()` chained-object model (and `langfuse.model.CreateTrace`
+etc.) no longer exists. `langfuse_tracer.py` is written against the real
+installed API — `start_observation()` / `.update()` / `.end()` on span
+objects, plus `propagate_attributes()` for trace-level `session_id`/tags —
+verified against `langfuse==4.14.0` via `inspect.signature`, and dry-run
+tested with dummy credentials to confirm zero local exceptions (the only
+errors were Langfuse's own background exporter logging an expected `401`
+against fake keys, never surfaced to the caller).
+
+### Metrics exposed
+
+| Metric | Type | Labels | What it answers |
+|---|---|---|---|
+| `llm_requests_total` | Counter | `source`, `model`, `complexity` | How many requests, broken down by cache vs LLM and model tier |
+| `cache_hits_total` / `cache_misses_total` | Counter | — | Raw hit/miss counts |
+| `budget_trips_total` | Counter | — | How many times the circuit breaker actually tripped |
+| `llm_request_latency_seconds` | Histogram | `source`, `model` | p50/p95/p99 latency via `histogram_quantile()` |
+| `llm_cost_per_request_usd` | Histogram | `model`, `complexity` | Cost distribution (excludes cache hits — they're $0) |
+| `cache_similarity_score` | Histogram | — | Where hits land relative to the 0.95 threshold |
+| `session_spend_usd` / `budget_remaining_usd` | Gauge | — | Current spend/headroom against the circuit breaker's budget |
+| `cache_entries_count` / `cache_hit_rate` | Gauge | — | Cache size and rolling hit rate |
+
+### Real run output (`run_observed_demo.py`, actual OpenAI API calls)
+
+Seven queries: two simple, two complex, three repeats of the same simple
+query expected to hit the cache.
+
+| Metric | Value |
+|---|---|
+| Simple calls (gpt-4o-mini) | 3 |
+| Complex calls (gpt-4o) | 2 |
+| Cache hits | 2 |
+| Cache hit rate | 28.6% (2 of 7) |
+| Session spend | $0.0102 |
+| Budget remaining ($0.10 budget) | $0.0898 |
+| `budget_trips_total` | 0 (budget wasn't exceeded) |
+
+Both cache hits were the exact repeat of "What is the capital of France?",
+landing at similarity 0.999/0.9987 — real proof the wrapper's single-call
+design doesn't break the cache. The rephrased variant ("France's capital
+city?") missed at similarity 0.793, consistent with the conservative 0.95
+threshold discussed above.
+
+### Running it
+
+```
+pip install prometheus-client langfuse
+export OPENAI_API_KEY=...
+# Optional -- tracing no-ops without these:
+export LANGFUSE_PUBLIC_KEY=...
+export LANGFUSE_SECRET_KEY=...
+
+cd rag/04-semantic-caching
+python run_observed_demo.py     # prints per-query results + a Prometheus snapshot
+
+# Separately, to actually scrape metrics into Prometheus/Grafana:
+python metrics_server.py        # serves http://localhost:8000/metrics
+```
+
+Grafana queries worth memorising:
+
+```
+p95 latency:   histogram_quantile(0.95, rate(llm_request_latency_seconds_bucket[5m]))
+cost p95:      histogram_quantile(0.95, rate(llm_cost_per_request_usd_bucket[5m]))
+cache hit rate: cache_hit_rate
+requests/min:  rate(llm_requests_total[1m]) * 60
+```
 
 ## Demo walkthrough (real run against the OpenAI API)
 
@@ -173,15 +279,22 @@ event per cache hit/miss, routing decision, and completed call).
 rag/04-semantic-caching/
 ├── requirements.txt
 ├── README.md
-└── llm_infra/
-    ├── exceptions.py        custom exception hierarchy
-    ├── semantic_cache.py    embedding-based query cache
-    ├── circuit_breaker.py   budget-based halt mechanism
-    ├── model_router.py      complexity classifier + tier routing
-    ├── cost_tracker.py      per-call/per-model token cost tracking
-    ├── logger.py            structured JSONL logging
-    ├── middleware.py        composes all of the above into llm_request()
-    ├── run_demo.py          end-to-end demo (writes results.json)
-    ├── results.json         real output from the last demo run
-    └── llm_infra_events.log.jsonl   structured event log from the last run
+├── metrics_server.py           standalone Prometheus /metrics HTTP endpoint
+├── run_observed_demo.py        end-to-end demo of the observability layer
+├── llm_infra/
+│   ├── exceptions.py        custom exception hierarchy
+│   ├── semantic_cache.py    embedding-based query cache
+│   ├── circuit_breaker.py   budget-based halt mechanism
+│   ├── model_router.py      complexity classifier + tier routing
+│   ├── cost_tracker.py      per-call/per-model token cost tracking
+│   ├── logger.py            structured JSONL logging
+│   ├── middleware.py        composes all of the above into llm_request()
+│   ├── run_demo.py          end-to-end demo (writes results.json)
+│   ├── results.json         real output from the last demo run
+│   └── llm_infra_events.log.jsonl   structured event log from the last run
+└── observability/
+    ├── __init__.py
+    ├── prometheus_metrics.py   Counter/Histogram/Gauge definitions
+    ├── langfuse_tracer.py      Langfuse v4 wrapper, no-op without keys set
+    └── middleware.py           observed_llm_request() -- see Observability above
 ```
