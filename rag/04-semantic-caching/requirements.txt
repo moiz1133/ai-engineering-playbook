@@ -1,3 +1,6 @@
 openai
 numpy
 python-dotenv
+
+# observability additions
+# pip install prometheus-client langfuse
