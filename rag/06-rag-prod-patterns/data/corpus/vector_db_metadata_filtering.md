@@ -1,0 +1,11 @@
+# Metadata Filtering in Vector Search
+
+Real-world vector search rarely happens in isolation — most production queries need to combine "find semantically similar vectors" with structured constraints like "only from this user's documents," "only published after this date," or "only from this source file." This combination is called metadata filtering (or "filtered vector search"), and how well a vector database supports it is a major differentiator in practice.
+
+The naive approach — run the vector search first, then filter results afterward — breaks down badly when filters are selective. If a query's metadata filter matches only 1% of the collection, but the vector index only returns the top 10 nearest neighbors from the *unfiltered* dataset, it's entirely possible that zero of those 10 satisfy the filter, and the query returns no results even though relevant matches exist elsewhere in the collection.
+
+Modern vector databases instead implement filtering integrated into the index traversal itself, sometimes called "pre-filtering" — during the HNSW graph walk, only candidates that satisfy the metadata filter are considered eligible neighbors, so the search naturally explores until it finds `k` filter-satisfying results rather than stopping at a fixed unfiltered candidate count. This is significantly more complex to implement efficiently, since naive pre-filtering can force the search to explore a much larger fraction of the graph when filters are highly selective, but it produces correct results where post-filtering would silently fail.
+
+In this project's ChromaDB collection, each chunk stores `source_file`, `chunk_index`, and `chunk_id` as metadata, which is enough to filter results down to a specific document or to look up a chunk's immediate neighbors by index — a common technique for expanding a retrieved chunk with its surrounding context after the fact, without having to store larger overlapping chunks in the first place.
+
+Metadata schema design deserves the same care as chunking strategy: fields you'll want to filter or aggregate on later (source, date, chunk position, access permissions) need to be captured at ingestion time, since retrofitting metadata onto an already-embedded corpus means re-processing everything.

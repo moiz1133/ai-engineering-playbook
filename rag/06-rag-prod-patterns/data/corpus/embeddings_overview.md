@@ -1,0 +1,9 @@
+# What Text Embeddings Actually Are
+
+A text embedding is a fixed-length vector of floating-point numbers produced by a neural network, meant to capture the semantic meaning of a piece of text in a form that's useful for numerical comparison. Two pieces of text with similar meaning should produce vectors that are close together under some distance metric, even if they share no words in common — "the car wouldn't start" and "my vehicle failed to turn on" should embed close together despite minimal lexical overlap.
+
+Modern embedding models, including OpenAI's `text-embedding-3-small` and `text-embedding-3-large`, are trained (often via contrastive learning) on pairs of texts known to be semantically related or unrelated, adjusting the model so related pairs end up close in vector space and unrelated pairs end up far apart. The output is typically a dense vector of several hundred to a few thousand dimensions — `text-embedding-3-small` produces 1536 dimensions by default, though OpenAI's API supports truncating this via a `dimensions` parameter without retraining, at a modest cost to accuracy.
+
+Embeddings are the foundation of nearly every modern retrieval system: a RAG pipeline embeds a corpus once at ingestion time, stores the vectors in an index (see vector databases), then embeds each incoming query the same way and searches for the nearest stored vectors. Because the same model must be used for both indexing and querying — mixing embedding models produces vectors that aren't comparable — the choice of embedding model is one of the few genuinely hard-to-change decisions in a RAG system's architecture, since changing it later requires re-embedding the entire corpus.
+
+Embeddings are not limited to text: image, audio, and multimodal embedding models exist and are trained the same way, just on different input modalities.

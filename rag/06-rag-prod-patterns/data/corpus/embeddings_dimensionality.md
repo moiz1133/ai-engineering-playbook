@@ -1,0 +1,9 @@
+# Embedding Dimensionality Tradeoffs
+
+Higher-dimensional embeddings can encode more nuanced semantic distinctions, but the relationship between dimension count and retrieval quality is not linear, and larger vectors carry real infrastructure costs.
+
+`text-embedding-3-small` defaults to 1536 dimensions, while `text-embedding-3-large` defaults to 3072. In OpenAI's own benchmarks, the large model outperforms the small model on retrieval tasks, but the gap is often modest relative to the doubled storage and compute cost. Both models also support a `dimensions` parameter that truncates the output vector (via a technique related to Matryoshka representation learning, where the model is trained so that meaningful information is concentrated in the earlier dimensions). This lets a team request, say, 256-dimensional vectors from `text-embedding-3-large` and get noticeably better quality than a from-scratch 256-dimension model, at a fraction of the storage of the full 3072-dimension vector.
+
+The storage cost of dimensionality compounds with corpus size: a million-chunk corpus at 1536 dimensions in 32-bit floats requires roughly 6 GB just for the raw vectors, before accounting for HNSW graph overhead (which itself scales with dimension count, since distance computations during graph traversal are the dominant cost). This is why some production systems deliberately choose a smaller embedding model or truncate dimensions even when it costs a percentage point or two of recall — the operational savings in memory and query latency can outweigh the quality loss, especially in cost-sensitive services.
+
+Choosing dimensionality is therefore a genuine systems tradeoff, not just a quality knob: teams should benchmark retrieval quality (see RAG evaluation) at multiple candidate dimensions against representative queries before committing, since the "best" embedding size is workload-dependent.

@@ -1,0 +1,9 @@
+# Chunk Overlap: Why and How Much
+
+Overlap means consecutive chunks share a region of text at their boundary — for example, a 300-token chunk size with 50-token overlap means each new chunk starts 50 tokens before the previous chunk ended, rather than immediately after it. The purpose is to reduce the odds that a single idea gets split with zero surrounding context in either resulting chunk.
+
+Without overlap, a sentence or idea that happens to straddle a chunk boundary is genuinely lost: the first chunk contains the beginning with no conclusion, and the second contains the conclusion with no setup, and neither embeds well or reads coherently if retrieved on its own. Overlap directly targets this failure mode by ensuring boundary-straddling content appears complete in at least one of the two chunks, since the shared region gives each side a chance to contain the full idea.
+
+The cost of overlap is duplicated storage and duplicated embedding calls — a 50-token overlap on 300-token chunks means roughly 17% of all embedded content is redundant across the corpus. At small scale this is a negligible cost; at very large corpus sizes (many millions of chunks) it becomes a real line item in both embedding API spend and vector storage.
+
+There's no universal "correct" overlap ratio, but a common rule of thumb is 10-20% of the chunk size. Too little overlap (or none) reintroduces the boundary-splitting problem; too much overlap inflates costs and can cause the same information to be retrieved multiple times as separate "different" chunks in a single query's top-k results, effectively wasting result slots on redundant content — which is a legitimate downside when top-k is small and every slot matters. As with chunk size itself, the right overlap should ultimately be validated against retrieval evaluation metrics rather than chosen purely by convention.

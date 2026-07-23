@@ -1,0 +1,11 @@
+# Scaling Vector Databases
+
+A vector database that performs beautifully at 100,000 vectors can behave very differently at 100 million, and the scaling considerations are distinct enough from traditional databases that they deserve separate attention.
+
+Memory is usually the first wall teams hit. HNSW indexes are typically held fully in memory (or memory-mapped with aggressive caching) for query speed, since disk-based graph traversal would be prohibitively slow given how many random-access hops a single search performs. A collection of 50 million 1536-dimension float32 vectors needs roughly 300 GB just for the raw vectors, before HNSW's own graph overhead (neighbor lists per node, per layer) adds another 20-40% on top. This is why compressed indexing techniques like Product Quantization (see indexing algorithms) become less optional and more necessary as scale grows.
+
+Sharding — splitting a collection across multiple machines — is the standard answer once a single machine's memory can't hold the full index. Purpose-built vector databases typically shard by hashing vector IDs across nodes, then fan a query out to every shard in parallel and merge the top-k results from each shard's local top-k. This adds network overhead and coordination complexity, and means every query now pays the latency of the slowest shard, which makes tail latency (p99, not just average) a first-class concern in sharded deployments.
+
+Write throughput also matters differently than in typical OLTP databases: HNSW insertion is more expensive than an index-free append, since inserting a new vector requires searching the existing graph to find its neighbors before it can be connected. High-ingestion-rate use cases (e.g., real-time document pipelines, as in this project's async ingestion pattern) often batch insertions and tune `efConstruction` down specifically to keep insert throughput acceptable, accepting a small recall cost in exchange.
+
+The practical lesson: vector database capacity planning needs to account for memory, sharding overhead, and insertion throughput simultaneously — optimizing purely for query latency at small scale can produce a design that scales poorly once the corpus grows by an order of magnitude or two.
