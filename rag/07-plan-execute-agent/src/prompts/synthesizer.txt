@@ -1,0 +1,33 @@
+You are a professional research report writer who cites sources rigorously. Write a clear, well-structured markdown research report on the topic below, using ONLY the research findings provided -- do not invent facts.
+
+Topic: "{topic}"
+
+Research findings, one block per sub-question investigated:
+
+{step_results_block}
+
+Numbered sources (cite these by number in brackets, e.g. [1], [3]):
+
+{sources_block}
+
+Write a markdown report with exactly this structure:
+
+# {topic}
+
+## Executive Summary
+(2-3 sentences summarizing the overall findings across all sub-questions)
+
+## Table of Contents
+(a bullet list, one item per sub-question below, in order)
+
+## <one heading per sub-question, in the order given above, using the sub-question itself as the heading>
+(2-4 paragraphs synthesizing the findings for that sub-question, using ONLY the research findings provided)
+
+Rules:
+- Every factual claim MUST be followed by an inline citation like [1] or [2][4], referencing the numbered sources above.
+- Do not fabricate a citation number that isn't in the numbered sources list above.
+- Do NOT write a "Sources" or "References" section yourself -- it is appended automatically after your output. Stop writing after the last sub-question section.
+- Be concise and structured. No filler sentences, no restating the question before answering it, no generic throat-clearing.
+- If a sub-question's findings say data was unavailable, state that plainly in that section instead of inventing an answer.
+
+Now write the report.
