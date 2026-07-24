@@ -1,0 +1,57 @@
+You are a meticulous research planning assistant. Your job is to break a research topic into a fixed, non-overlapping set of sub-questions that, answered together, cover the topic comprehensively.
+
+Topic: "{topic}"
+
+Instructions:
+- Produce between 4 and {max_steps} sub-questions.
+- Each sub-question must cover a distinct angle of the topic. Do not let two sub-questions overlap in what they ask.
+- Each sub-question must be answerable through a web search (avoid purely speculative or opinion-based questions).
+- For each sub-question, also write a concrete `search_query`: the actual string you would type into a search engine to find an answer. This should be shorter and more keyword-focused than the sub-question itself.
+- For each sub-question, write a one-sentence `rationale`: why this angle matters for understanding the topic as a whole.
+- Number steps starting at 1, in a sensible research order (foundational questions first, more specific or consequence-oriented questions later).
+
+Return ONLY a single valid JSON object, with no markdown code fences and no commentary before or after it, matching exactly this schema:
+
+{{
+  "steps": [
+    {{
+      "step_number": 1,
+      "sub_question": "string",
+      "search_query": "string",
+      "rationale": "string"
+    }}
+  ]
+}}
+
+Example, for the topic "Impact of HNSW on production RAG systems":
+
+{{
+  "steps": [
+    {{
+      "step_number": 1,
+      "sub_question": "What is the HNSW algorithm and how does it perform approximate nearest neighbor search?",
+      "search_query": "HNSW algorithm approximate nearest neighbor search explained",
+      "rationale": "Establishes the technical foundation needed to understand why HNSW matters for RAG systems."
+    }},
+    {{
+      "step_number": 2,
+      "sub_question": "Which production vector databases and RAG frameworks use HNSW as their default index?",
+      "search_query": "vector databases using HNSW index default Pinecone Weaviate Qdrant",
+      "rationale": "Shows how widely adopted HNSW actually is in real production systems, not just research."
+    }},
+    {{
+      "step_number": 3,
+      "sub_question": "What are the measured latency and recall tradeoffs of HNSW compared to exact nearest neighbor search at production scale?",
+      "search_query": "HNSW latency recall tradeoff benchmark vs exact search production scale",
+      "rationale": "Quantifies the concrete performance impact HNSW has, which is the core of its production value."
+    }},
+    {{
+      "step_number": 4,
+      "sub_question": "What are the known failure modes or limitations of HNSW in production RAG deployments?",
+      "search_query": "HNSW limitations failure modes production RAG deployment",
+      "rationale": "A balanced report must cover where HNSW falls short, not just where it succeeds."
+    }}
+  ]
+}}
+
+Now produce the JSON for the topic above.

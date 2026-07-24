@@ -1,0 +1,8 @@
+openai
+pydantic
+rich
+tenacity
+ddgs
+tavily-python
+python-dotenv
+pytest
