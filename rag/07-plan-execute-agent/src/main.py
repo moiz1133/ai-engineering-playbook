@@ -14,8 +14,9 @@ from rich.table import Table
 
 from src.executor import execute_plan
 from src.planner import generate_plan
+from src.reflector import Reflector, save_reflection_log
 from src.report import save_fallback, save_report, synthesize_report
-from src.schemas import Plan, PlanStep, StepResult
+from src.schemas import Critique, Plan, PlanStep, StepResult
 
 console = Console()
 logger = logging.getLogger(__name__)
@@ -52,10 +53,33 @@ def _on_step_done(step: PlanStep, result: StepResult, elapsed_s: float, verbose:
             console.print(f"     [dim]- {r.title} ({r.url})[/dim]")
 
 
+def _on_reflection_iteration_start(iteration: int) -> None:
+    verb = "critiquing report" if iteration == 1 else "critiquing revised report"
+    console.print(f"[bold magenta]Reflection iteration {iteration}[/bold magenta]: {verb}...")
+
+
+def _on_reflection_critique_done(iteration: int, critique: Critique, decision: str) -> None:
+    extra = f" ({len(critique.additional_queries)} additional queries)" if decision == "re-execute" else ""
+    console.print(
+        f"   Critique complete. Decision: [bold]{decision}[/bold]{extra}. (confidence: {critique.confidence:.2f})"
+    )
+
+
+def _on_reflection_search_start(iteration: int, queries: list[str]) -> None:
+    console.print("   [cyan]Running additional search queries...[/cyan]")
+
+
+def _on_reflection_revised(iteration: int, decision: str) -> None:
+    console.print(f"   [green]Report revised[/green] ({decision}).")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Plan-and-Execute research agent.")
     parser.add_argument("topic", type=str, help="Research topic to investigate")
     parser.add_argument("--verbose", action="store_true", help="Print full plan and step details")
+    parser.add_argument(
+        "--reflect", action="store_true", help="Run a self-reflection loop on the report before saving it"
+    )
     args = parser.parse_args()
 
     _setup_logging(args.verbose)
@@ -79,8 +103,6 @@ def main() -> None:
     console.print("[bold]Phase 3: Synthesizing report...[/bold]")
     try:
         report = synthesize_report(plan, step_results)
-        path = save_report(report)
-        console.print(Panel(f"[bold green]Report saved:[/bold green] {path}", expand=False))
     except Exception as e:
         logger.exception("Synthesis failed")
         path = save_fallback(plan, step_results)
@@ -92,6 +114,29 @@ def main() -> None:
             )
         )
         sys.exit(1)
+
+    if args.reflect:
+        console.print("\n[bold]Phase 4: Self-reflection...[/bold]")
+        reflector = Reflector()
+        result = reflector.run_reflection_loop(
+            report.full_markdown,
+            plan.topic,
+            plan,
+            step_results,
+            on_iteration_start=_on_reflection_iteration_start,
+            on_critique_done=_on_reflection_critique_done,
+            on_search_start=_on_reflection_search_start,
+            on_revised=_on_reflection_revised,
+        )
+        report.full_markdown = result.final_report_markdown
+        log_path = save_reflection_log(result)
+        console.print(
+            f"Reflection finished after {result.total_iterations} iteration(s) "
+            f"({result.stop_reason}). Log saved: {log_path}\n"
+        )
+
+    path = save_report(report)
+    console.print(Panel(f"[bold green]Report saved:[/bold green] {path}", expand=False))
 
 
 if __name__ == "__main__":
