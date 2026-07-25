@@ -41,3 +41,35 @@ class ReportData(BaseModel):
     markdown_body: str = ""  # LLM-synthesized title/summary/TOC/sections, no Sources section
     full_markdown: str = ""  # markdown_body + the appended Sources section
     output_path: Optional[str] = None
+
+
+class Critique(BaseModel):
+    """The critic LLM's structured assessment of a draft report."""
+
+    is_sufficient: bool
+    missing_information: List[str] = Field(default_factory=list)
+    weak_sections: List[str] = Field(default_factory=list)  # each entry: "<section>: <reason>"
+    additional_queries: List[str] = Field(default_factory=list)  # only populated if is_sufficient is False
+    confidence: float
+    overall_assessment: str
+
+
+class ReflectionIteration(BaseModel):
+    """One pass through the critique -> decide -> revise/re-execute loop."""
+
+    iteration: int
+    critique: Critique
+    decision: str  # "accept" | "revise" | "re-execute"
+    additional_queries_run: List[str] = Field(default_factory=list)
+    improvement_notes: str = ""
+
+
+class ReflectionResult(BaseModel):
+    """Final output of the bounded reflection loop: the (possibly revised) report plus the full iteration history."""
+
+    topic: str
+    final_report_markdown: str
+    total_iterations: int
+    iterations: List[ReflectionIteration] = Field(default_factory=list)
+    final_confidence: float
+    stop_reason: str  # "accepted" | "max_iterations" | "no_improvement" | "critic_failed" | "token_budget_exceeded"
