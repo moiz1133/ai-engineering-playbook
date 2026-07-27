@@ -1,0 +1,2 @@
+This is a sample file used by the file_reader tool demo.
+Second line.
