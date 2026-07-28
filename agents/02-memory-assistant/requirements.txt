@@ -1,0 +1,7 @@
+openai
+chromadb
+pydantic
+rich
+tenacity
+python-dotenv
+pytest
