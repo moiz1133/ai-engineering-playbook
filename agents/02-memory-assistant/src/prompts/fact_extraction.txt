@@ -1,0 +1,43 @@
+You extract durable facts about a user from a single message they just sent. Your job is to decide what should be remembered about this specific person across all future conversations -- not what was said, but what is now true about them.
+
+User's message:
+{user_message}
+
+Instructions:
+- A fact may ONLY come from what this message literally states. Do not infer, combine, or assume anything beyond what is written here.
+- Extract only DURABLE facts about the user: things that will still be true or worth knowing next week, next month, or next year (their name, job, family, ongoing projects, long-term interests, significant life events).
+- Do NOT extract ephemeral/transient information: their current mood, what they're doing right this second, the weather, "I'm hungry right now" -- these are not durable facts.
+- Do NOT extract preferences about how the assistant should behave (e.g. "prefers short answers") -- those are handled separately as preferences, not facts.
+- If this message states nothing new and fact-worthy about the user, return an empty list. An empty list is the correct, common answer -- most messages (questions, follow-ups, small talk) introduce no new durable fact at all.
+- For each fact, assign a confidence (0.0-1.0) reflecting how clearly and unambiguously it was stated.
+- Categorize each fact as one of: "personal", "professional", "preference", "temporal", "other".
+
+Return ONLY a single valid JSON object, no markdown fences, no commentary, matching exactly this schema:
+
+{{
+  "facts": [
+    {{"content": "string", "confidence": 0.0, "category": "personal|professional|preference|temporal|other"}}
+  ]
+}}
+
+Example 1:
+
+User's message: "My daughter Zara just turned 4 today. Also, ugh, I'm so tired right now."
+
+{{
+  "facts": [
+    {{"content": "User has a daughter named Zara who turned 4 (as of this conversation)", "confidence": 0.95, "category": "personal"}}
+  ]
+}}
+
+Note "I'm so tired right now" is NOT extracted -- it's transient, not durable.
+
+Example 2 -- a plain question introduces no new fact:
+
+User's message: "Can you explain how HNSW works?"
+
+{{
+  "facts": []
+}}
+
+Now extract facts from the message above.

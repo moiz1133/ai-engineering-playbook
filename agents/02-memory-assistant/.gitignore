@@ -1,0 +1,4 @@
+__pycache__/
+.env
+data/chroma_memory/
+data/procedural.db
