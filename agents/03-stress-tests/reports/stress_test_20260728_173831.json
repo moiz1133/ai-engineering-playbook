@@ -1,0 +1,166 @@
+{
+  "run_timestamp": "2026-07-28T12:38:31.556361+00:00",
+  "total_scenarios": 8,
+  "passed": 6,
+  "failed": 2,
+  "by_tool": {
+    "web_search": {
+      "total": 8,
+      "passed": 6
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_name": "web_search_timeout",
+      "tool_name": "web_search",
+      "failure_type": "timeout",
+      "passed": true,
+      "failure_description": "Mock simulates a response slower than the client's configured timeout.",
+      "observed_behavior": "Raised ToolTimeoutError: Tavily search timed out after 15.0s: The read operation timed out",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3029,
+      "error_class": "ToolTimeoutError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_network_error",
+      "tool_name": "web_search",
+      "failure_type": "network_error",
+      "passed": false,
+      "failure_description": "Mock raises a DNS/connection failure on the underlying HTTP call.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily request failed: Name resolution failed",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": false,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3027,
+      "error_class": "ToolExecutionError",
+      "notes": "Real finding: production-tools' current message is 'Raised ToolExecutionError: Tavily request failed: Name resolution failed' -- it leaks the internal service name ('Tavily') and raw DNS jargon ('Name resolution failed') instead of a clean, user-facing message like 'Search unavailable due to a network error. Please try again later.'"
+    },
+    {
+      "scenario_name": "web_search_rate_limit",
+      "tool_name": "web_search",
+      "failure_type": "rate_limit",
+      "passed": true,
+      "failure_description": "Mock returns HTTP 429 with Retry-After: 60 on every attempt.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily API unavailable after retries: Tavily returned retryable status 429",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3031,
+      "error_class": "ToolExecutionError",
+      "notes": "production-tools' current ToolExecutionError message does not surface the Retry-After value verbatim -- this is flagged in 'notes', not silently passed, since real callers benefit from it."
+    },
+    {
+      "scenario_name": "web_search_empty_results",
+      "tool_name": "web_search",
+      "failure_type": "empty",
+      "passed": true,
+      "failure_description": "Mock returns a valid response shape with results: [].",
+      "observed_behavior": "Returned successfully: total_results=0, results=[]",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_malformed_response",
+      "tool_name": "web_search",
+      "failure_type": "malformed",
+      "passed": true,
+      "failure_description": "Mock returns {'garbage': true, 'not_what_we': 'expected'} with HTTP 200.",
+      "observed_behavior": "Returned successfully with results=[] (missing 'results' key defaulted to empty)",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_partial_results",
+      "tool_name": "web_search",
+      "failure_type": "partial",
+      "passed": false,
+      "failure_description": "Mock returns 5 results; 3 have url=None.",
+      "observed_behavior": "Raised ValidationError instead of returning partial results: 1 validation error for SearchResult\nurl\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+      "grace_criteria_met": {
+        "no_unhandled_exception": false,
+        "typed_error": false,
+        "human_readable_message": false,
+        "structured_error_response": false,
+        "consistent_state": false,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ValidationError",
+      "notes": "WebSearchTool.SearchResult.url is typed as `str`, so a None url actually fails Pydantic validation for the affected items -- see notes on whether this scenario passes for the real, current tool implementation."
+    },
+    {
+      "scenario_name": "web_search_auth_failure",
+      "tool_name": "web_search",
+      "failure_type": "auth_failure",
+      "passed": true,
+      "failure_description": "Mock returns HTTP 401 Unauthorized.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily API error 401: Unauthorized: invalid API key",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolExecutionError",
+      "notes": "production-tools' web_search.py currently classifies 401/403 as ToolExecutionError, not ToolSecurityError -- a real finding: auth failures are a distinct, security-relevant category and arguably deserve their own typed exception."
+    },
+    {
+      "scenario_name": "web_search_cascading_retry",
+      "tool_name": "web_search",
+      "failure_type": "cascading",
+      "passed": true,
+      "failure_description": "Mock: empty results, empty results, then success across the underlying calls.",
+      "observed_behavior": "Succeeded on final attempt: total_results=0",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": "The real WebSearchTool retries on 429/5xx/timeout, not on a valid empty-results response -- this scenario exercises the tool's single-call path per attempt rather than tenacity's own retry loop, since 'empty results' is success, not a retryable failure."
+    }
+  ]
+}
