@@ -1,0 +1,478 @@
+{
+  "run_timestamp": "2026-07-28T12:33:08.014215+00:00",
+  "total_scenarios": 24,
+  "passed": 22,
+  "failed": 2,
+  "by_tool": {
+    "web_search": {
+      "total": 8,
+      "passed": 6
+    },
+    "database": {
+      "total": 8,
+      "passed": 8
+    },
+    "code_execution": {
+      "total": 8,
+      "passed": 8
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_name": "web_search_timeout",
+      "tool_name": "web_search",
+      "failure_type": "timeout",
+      "passed": true,
+      "failure_description": "Mock simulates a response slower than the client's configured timeout.",
+      "observed_behavior": "Raised ToolTimeoutError: Tavily search timed out after 15.0s: The read operation timed out",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3021,
+      "error_class": "ToolTimeoutError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_network_error",
+      "tool_name": "web_search",
+      "failure_type": "network_error",
+      "passed": false,
+      "failure_description": "Mock raises a DNS/connection failure on the underlying HTTP call.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily request failed: Name resolution failed",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": false,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3025,
+      "error_class": "ToolExecutionError",
+      "notes": "Real finding: production-tools' current message is 'Raised ToolExecutionError: Tavily request failed: Name resolution failed' -- it leaks the internal service name ('Tavily') and raw DNS jargon ('Name resolution failed') instead of a clean, user-facing message like 'Search unavailable due to a network error. Please try again later.'"
+    },
+    {
+      "scenario_name": "web_search_rate_limit",
+      "tool_name": "web_search",
+      "failure_type": "rate_limit",
+      "passed": true,
+      "failure_description": "Mock returns HTTP 429 with Retry-After: 60 on every attempt.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily API unavailable after retries: Tavily returned retryable status 429",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3012,
+      "error_class": "ToolExecutionError",
+      "notes": "production-tools' current ToolExecutionError message does not surface the Retry-After value verbatim -- this is flagged in 'notes', not silently passed, since real callers benefit from it."
+    },
+    {
+      "scenario_name": "web_search_empty_results",
+      "tool_name": "web_search",
+      "failure_type": "empty",
+      "passed": true,
+      "failure_description": "Mock returns a valid response shape with results: [].",
+      "observed_behavior": "Returned successfully: total_results=0, results=[]",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_malformed_response",
+      "tool_name": "web_search",
+      "failure_type": "malformed",
+      "passed": true,
+      "failure_description": "Mock returns {'garbage': true, 'not_what_we': 'expected'} with HTTP 200.",
+      "observed_behavior": "Returned successfully with results=[] (missing 'results' key defaulted to empty)",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "web_search_partial_results",
+      "tool_name": "web_search",
+      "failure_type": "partial",
+      "passed": false,
+      "failure_description": "Mock returns 5 results; 3 have url=None.",
+      "observed_behavior": "Raised ValidationError instead of returning partial results: 1 validation error for SearchResult\nurl\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+      "grace_criteria_met": {
+        "no_unhandled_exception": false,
+        "typed_error": false,
+        "human_readable_message": false,
+        "structured_error_response": false,
+        "consistent_state": false,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ValidationError",
+      "notes": "WebSearchTool.SearchResult.url is typed as `str`, so a None url actually fails Pydantic validation for the affected items -- see notes on whether this scenario passes for the real, current tool implementation."
+    },
+    {
+      "scenario_name": "web_search_auth_failure",
+      "tool_name": "web_search",
+      "failure_type": "auth_failure",
+      "passed": true,
+      "failure_description": "Mock returns HTTP 401 Unauthorized.",
+      "observed_behavior": "Raised ToolExecutionError: Tavily API error 401: Unauthorized: invalid API key",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolExecutionError",
+      "notes": "production-tools' web_search.py currently classifies 401/403 as ToolExecutionError, not ToolSecurityError -- a real finding: auth failures are a distinct, security-relevant category and arguably deserve their own typed exception."
+    },
+    {
+      "scenario_name": "web_search_cascading_retry",
+      "tool_name": "web_search",
+      "failure_type": "cascading",
+      "passed": true,
+      "failure_description": "Mock: empty results, empty results, then success across the underlying calls.",
+      "observed_behavior": "Succeeded on final attempt: total_results=0",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": "The real WebSearchTool retries on 429/5xx/timeout, not on a valid empty-results response -- this scenario exercises the tool's single-call path per attempt rather than tenacity's own retry loop, since 'empty results' is success, not a retryable failure."
+    },
+    {
+      "scenario_name": "database_empty_results",
+      "tool_name": "database",
+      "failure_type": "empty",
+      "passed": true,
+      "failure_description": "Mock returns zero rows for a valid query.",
+      "observed_behavior": "Returned successfully: rows=[], row_count=0, truncated=False",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_connection_refused",
+      "tool_name": "database",
+      "failure_type": "connection_refused",
+      "passed": true,
+      "failure_description": "Mock raises a connection-refused error when acquiring a connection.",
+      "observed_behavior": "Raised ToolExecutionError: Query execution failed: Connection refused: 5432",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolExecutionError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_query_timeout",
+      "tool_name": "database",
+      "failure_type": "timeout",
+      "passed": true,
+      "failure_description": "Mock raises psycopg's QueryCanceled, simulating statement_timeout firing.",
+      "observed_behavior": "Raised ToolTimeoutError: Query exceeded the 30s timeout",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolTimeoutError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_syntax_error",
+      "tool_name": "database",
+      "failure_type": "syntax_error",
+      "passed": true,
+      "failure_description": "Mock raises psycopg's SyntaxError subtype on execute().",
+      "observed_behavior": "Raised ToolExecutionError: Query execution failed: syntax error at or near \"WHERE\"",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolExecutionError",
+      "notes": "Real finding: production-tools classifies SQL syntax errors as ToolExecutionError, the same class used for connection/timeout failures -- a caller can't distinguish 'fix your query' from 'the database itself is having a problem' by exception type alone. ToolInputError would be a more precise fit, since a syntax error is the caller's fault, not an execution failure."
+    },
+    {
+      "scenario_name": "database_permission_denied",
+      "tool_name": "database",
+      "failure_type": "permission_denied",
+      "passed": true,
+      "failure_description": "Real DELETE query submitted to the real read-only validation logic, with a pool that raises if ever touched.",
+      "observed_behavior": "Raised ToolSecurityError: Only SELECT queries are allowed, got statement type: DELETE",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolSecurityError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_rows_truncated",
+      "tool_name": "database",
+      "failure_type": "rows_truncated",
+      "passed": true,
+      "failure_description": "Mock has 500 available rows; tool is asked for max_rows=100.",
+      "observed_behavior": "Returned row_count=100, truncated=True",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_null_values",
+      "tool_name": "database",
+      "failure_type": "null_values",
+      "passed": true,
+      "failure_description": "Mock returns rows with NULL in the name/email columns.",
+      "observed_behavior": "Returned successfully: rows=[{'id': 1, 'name': None, 'email': None}, {'id': 2, 'name': 'bob', 'email': None}]",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "database_type_mismatch",
+      "tool_name": "database",
+      "failure_type": "type_mismatch",
+      "passed": true,
+      "failure_description": "Mock returns a string value for a column a caller might expect to be numeric.",
+      "observed_behavior": "Returned successfully: rows=[{'id': 'not_a_number'}]",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_syntax_error",
+      "tool_name": "code_execution",
+      "failure_type": "syntax_error",
+      "passed": true,
+      "failure_description": "Mock returns exit_code=1 with a SyntaxError in stderr.",
+      "observed_behavior": "Returned exit_code=1, stderr='SyntaxError: invalid syntax'",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_runtime_error",
+      "tool_name": "code_execution",
+      "failure_type": "runtime_error",
+      "passed": true,
+      "failure_description": "Mock returns exit_code=1 with a ZeroDivisionError in stderr.",
+      "observed_behavior": "Returned exit_code=1, stderr='ZeroDivisionError: division by zero'",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 3,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_execution_timeout",
+      "tool_name": "code_execution",
+      "failure_type": "timeout",
+      "passed": true,
+      "failure_description": "Mock's container.wait() raises a client-side read-timeout.",
+      "observed_behavior": "Returned timed_out=True, exit_code=-1",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 1,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_memory_exceeded",
+      "tool_name": "code_execution",
+      "failure_type": "memory_exceeded",
+      "passed": true,
+      "failure_description": "Mock returns exit_code=137 (SIGKILL from an OOM kill).",
+      "observed_behavior": "Returned exit_code=137, stderr='Killed: 9'",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 2,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_infinite_loop",
+      "tool_name": "code_execution",
+      "failure_type": "infinite_loop",
+      "passed": true,
+      "failure_description": "Mock preserves partial stdout printed before the timeout kill fires.",
+      "observed_behavior": "Returned timed_out=True, stdout='counting: 1\\ncounting: 2\\ncounting: 3\\n'",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 1,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_blocked_import",
+      "tool_name": "code_execution",
+      "failure_type": "import_blocked",
+      "passed": true,
+      "failure_description": "Code containing 'import subprocess' submitted to the real denylist, with a docker client that raises if ever touched.",
+      "observed_behavior": "Raised ToolSecurityError: Code contains a denylisted pattern: \\bimport\\s+subprocess\\b",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 0,
+      "error_class": "ToolSecurityError",
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_stderr_only",
+      "tool_name": "code_execution",
+      "failure_type": "stderr_only",
+      "passed": true,
+      "failure_description": "Mock returns exit_code=0 with only stderr populated.",
+      "observed_behavior": "Returned exit_code=0, stdout='', stderr=\"warning: something's wrong\"",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 1,
+      "error_class": null,
+      "notes": ""
+    },
+    {
+      "scenario_name": "code_empty_output",
+      "tool_name": "code_execution",
+      "failure_type": "empty_output",
+      "passed": true,
+      "failure_description": "Mock returns exit_code=0 with empty stdout and stderr.",
+      "observed_behavior": "Returned exit_code=0, stdout='', stderr=''",
+      "grace_criteria_met": {
+        "no_unhandled_exception": true,
+        "typed_error": true,
+        "human_readable_message": true,
+        "structured_error_response": true,
+        "consistent_state": true,
+        "recovery_possible": true
+      },
+      "response_time_ms": 1,
+      "error_class": null,
+      "notes": ""
+    }
+  ]
+}
