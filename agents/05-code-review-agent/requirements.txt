@@ -1,0 +1,11 @@
+# Pinned to the last ag2 release that ships the classic synchronous `import autogen`
+# API (AssistantAgent / GroupChat / GroupChatManager / UserProxyAgent with llm_config
+# dicts) that this project's group-chat pattern is built on. `pip install pyautogen`
+# now resolves to Microsoft's rewritten async autogen-agentchat package instead, which
+# has no `import autogen` namespace at all -- see README "Why AutoGen Here".
+ag2==0.9.10
+openai>=1.30.0
+pydantic>=2.7.0
+python-dotenv>=1.0.0
+rich>=13.7.0
+pytest>=8.2.0
